@@ -1,6 +1,7 @@
 package com.justbytes.itechquiz;
 
 import java.util.List;
+import java.util.Map;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -88,10 +89,15 @@ public class BaseActivity extends Activity {
 			int fetchCount = 0;
 			try {
 				dataFetcher = new RemoteDataFetcher();
+				// fetch latest
 				List<QAndA> qandaList = dataFetcher
 						.fetchLatestQandA(getApplicationContext());
 				fetchCount = qandaList.size();
-				dbAdapter.insertQandA(qandaList);
+				// insert into q_and_a
+				Map<Integer, Integer> topicVersionMap = dbAdapter
+						.insertQandA(qandaList);
+				// upgrade topic version
+				dbAdapter.updateTopicVersion(topicVersionMap);
 			} catch (Exception ex) {
 				Log.e("BaseActivity", "Error retrieving new questions", ex);
 				fetchCount = 0;

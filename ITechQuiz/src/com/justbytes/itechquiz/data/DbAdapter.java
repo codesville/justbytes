@@ -4,7 +4,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -36,6 +39,7 @@ public class DbAdapter extends SQLiteOpenHelper {
 	public static final String C_Q_A_QUESTION = "question";
 	public static final String C_Q_A_ANSWER = "answer";
 	public static final String C_Q_A_TOPIC_ID = "topic_id";
+	public static final String C_Q_A_VERSION = "version";
 
 	public DbAdapter(Context context) {
 		super(context, DB_NAME, null, DB_VER);
@@ -155,7 +159,7 @@ public class DbAdapter extends SQLiteOpenHelper {
 		int maxVersion = 1;
 		try {
 			cursor.moveToFirst();
-			Log.d(TAG, cursor.getInt(0) + " max(version)");
+			// Log.d(TAG, cursor.getInt(0) + " max(version)");
 			maxVersion = cursor.getInt(0);
 		} finally {
 			if (cursor != null)
@@ -165,6 +169,23 @@ public class DbAdapter extends SQLiteOpenHelper {
 
 		}
 		return maxVersion;
+	}
+
+	public void updateTopicVersion(Map<Integer, Integer> topicVersionMap) {
+		db = getWritableDatabase();
+		try {
+			for (Integer topicId : topicVersionMap.keySet()) {
+				ContentValues values = new ContentValues();
+				values.put(C_Q_A_VERSION, topicVersionMap.get(topicId));
+				db.update(TOPICS_TABLE_NAME, values, C_ID + " = ? ",
+						new String[] { topicId + "" });
+			}
+		} catch (Exception ex) {
+			Log.e(TAG, "Error updating topic versions:", ex);
+		} finally {
+			if (db != null)
+				db.close();
+		}
 	}
 
 	public void close() {
@@ -199,20 +220,36 @@ public class DbAdapter extends SQLiteOpenHelper {
 
 	}
 
-	public void insertQandA(List<QAndA> qandaList) {
+	public Map<Integer, Integer> insertQandA(List<QAndA> qandaList) {
 		if (qandaList.size() == 0)
-			return;
+			return Collections.EMPTY_MAP;
+
+		Map<Integer, Integer> topicVersionMap = new HashMap<Integer, Integer>();
 		db = getWritableDatabase();
-		for (QAndA qanda : qandaList) {
-			ContentValues rowValues = new ContentValues();
-			rowValues.put(C_Q_A_QUESTION, qanda.getQuestion());
-			rowValues.put(C_Q_A_ANSWER, qanda.getAnswer());
-			rowValues.put(C_Q_A_TOPIC_ID, qanda.getTopicId());
-			db.insertWithOnConflict(Q_A_TABLE_NAME, null, rowValues,
-					SQLiteDatabase.CONFLICT_IGNORE);
+		try {
+			for (QAndA qanda : qandaList) {
+				ContentValues rowValues = new ContentValues();
+				rowValues.put(C_Q_A_QUESTION, qanda.getQuestion());
+				rowValues.put(C_Q_A_ANSWER, qanda.getAnswer());
+				rowValues.put(C_Q_A_TOPIC_ID, qanda.getTopicId());
+				// when inserting questions from assets folder, version may
+				// default to 0 if the files dont have version element.However
+				// the map is not used in that case. Its only used when fetching
+				// questions remotely
+				topicVersionMap.put(qanda.getTopicId(), qanda.getVersion());
+
+				db.insertWithOnConflict(Q_A_TABLE_NAME, null, rowValues,
+						SQLiteDatabase.CONFLICT_IGNORE);
+			}
+			Log.d(TAG, "Finished inserting " + qandaList.size()
+					+ " rows to SQLiteDB from JsonList");
+		} catch (Exception ex) {
+			Log.e(TAG, "Error updating topic versions:", ex);
+		} finally {
+			if (db != null)
+				db.close();
 		}
-		Log.d(TAG, "Finished inserting " + qandaList.size()
-				+ "rows to SQLiteDB from JsonList");
+		return topicVersionMap;
 	}
 
 }

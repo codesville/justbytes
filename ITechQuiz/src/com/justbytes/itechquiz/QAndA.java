@@ -3,6 +3,7 @@ package com.justbytes.itechquiz;
 
 public class QAndA {
 	private int id;
+	private int version;
 	private String question;
 	private String answer;
 	private String category;
@@ -45,6 +46,12 @@ public class QAndA {
 	}
 	public void setTopicId(int topicId) {
 		this.topicId = topicId;
+	}
+	public int getVersion() {
+		return version;
+	}
+	public void setVersion(int version) {
+		this.version = version;
 	}
 
 	

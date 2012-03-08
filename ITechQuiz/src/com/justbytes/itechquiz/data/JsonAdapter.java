@@ -55,7 +55,9 @@ public class JsonAdapter {
 	public List<QAndA> parseJsonString(String jsonStringArray)
 			throws JSONException {
 		List<QAndA> qandaList = new ArrayList<QAndA>();
-		JSONArray jsonArray = new JSONArray(jsonStringArray);
+
+		JSONObject qandaJson = new JSONObject(jsonStringArray);
+		JSONArray jsonArray = qandaJson.getJSONArray("QandAList");
 
 		for (int row = 0; row < jsonArray.length(); row++) {
 			JSONObject jsonObj = jsonArray.getJSONObject(row);
@@ -69,9 +71,12 @@ public class JsonAdapter {
 		qanda.setQuestion(jsonObj.getString(DbAdapter.C_Q_A_QUESTION));
 		qanda.setAnswer(jsonObj.getString(DbAdapter.C_Q_A_ANSWER));
 		qanda.setCategory(jsonObj.getString(DbAdapter.C_TOPIC_CATEGORY));
-		qanda.setTopicId(Integer.parseInt(jsonObj
-				.getString(DbAdapter.C_Q_A_TOPIC_ID)));
-		// qanda.setId(Integer.parseInt(jsonObj.getString("id")));
+		qanda.setTopicId(jsonObj.getInt(DbAdapter.C_Q_A_TOPIC_ID));
+		try{
+			qanda.setVersion(jsonObj.getInt(DbAdapter.C_Q_A_VERSION));
+		}catch(Exception ex){
+			//do nothing.some files may not have version
+		}
 		//System.out.println("Built row = " + qanda);
 		return qanda;
 	}

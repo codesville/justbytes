@@ -1,12 +1,14 @@
 package com.justbytes.itechquiz;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 public class ITechQuizActivity extends BaseActivity implements OnClickListener {
 
@@ -44,18 +46,9 @@ public class ITechQuizActivity extends BaseActivity implements OnClickListener {
 		hibernateButton.setOnClickListener(this);
 		springButton.setOnClickListener(this);
 
-		// move to AsyncTask
-		try {
-			dbAdapter.createDatabase();
-		} catch (Exception ex) {
-			Log.e(TAG, ex.getMessage());
-			throw new Error("Unable to create database");
-		}
-		// try{
-		// dbAdapter.openDatabase();
-		// }catch(Exception ex){
-		// Log.e(TAG, ex.getMessage());
-		// }
+		// load pre-baked DB from assets folder
+		new DbLoadTask().execute(new Void[] {});
+
 	}
 
 	@Override
@@ -65,21 +58,17 @@ public class ITechQuizActivity extends BaseActivity implements OnClickListener {
 		Bundle bundle = new Bundle();
 		switch (v.getId()) {
 		case R.id.javaImgButton:
-			// Log.i(TAG, "Java image button clicked");
 			category = Category.Java;
 			break;
 		case R.id.netImgButton:
-			// Log.i(TAG, ".NET image button clicked");
 			category = Category.DotNet;
 			break;
 		case R.id.sqlImgButton:
-			// Log.i(TAG, "sql image button clicked");
 			category = Category.Sql;
 			intent = new Intent(this, QandAActivity.class);
 			bundle.putString(TopicsActivity.TOPIC_NAME_KEY, "All");
 			break;
 		case R.id.unixImgButton:
-			// Log.i(TAG, "Unix image button clicked");
 			category = Category.Unix;
 			intent = new Intent(this, QandAActivity.class);
 			bundle.putString(TopicsActivity.TOPIC_NAME_KEY, "All");
@@ -90,7 +79,6 @@ public class ITechQuizActivity extends BaseActivity implements OnClickListener {
 			bundle.putString(TopicsActivity.TOPIC_NAME_KEY, "All");
 			break;
 		case R.id.springImgButton:
-			// Log.i(TAG, "Unix image button clicked");
 			category = Category.Spring;
 			intent = new Intent(this, QandAActivity.class);
 			bundle.putString(TopicsActivity.TOPIC_NAME_KEY, "All");
@@ -100,6 +88,38 @@ public class ITechQuizActivity extends BaseActivity implements OnClickListener {
 		bundle.putString(CATEGORY_KEY, category.toString());
 		intent.putExtras(bundle);
 		startActivity(intent);
+	}
+
+	class DbLoadTask extends AsyncTask<Void, Void, Void> {
+		ProgressBar progBar = (ProgressBar) findViewById(R.id.mainProgressBar);
+
+		@Override
+		protected Void doInBackground(Void... params) {
+
+			try {
+				dbAdapter.createDatabase();
+			} catch (Exception ex) {
+				Log.e(TAG, ex.getMessage());
+				throw new Error("Unable to create database");
+			}
+			// try{
+			// dbAdapter.openDatabase();
+			// }catch(Exception ex){
+			// Log.e(TAG, ex.getMessage());
+			// }
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			progBar.setVisibility(View.GONE);
+		}
+
+		@Override
+		protected void onProgressUpdate(Void... values) {
+			progBar.bringToFront();
+		}
+
 	}
 
 }
