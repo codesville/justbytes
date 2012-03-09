@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="wrap_content"
+  android:layout_height="fill_parent">
+  <!-- Horizontal -->
+    <LinearLayout android:id="@+id/linearLayout1" android:layout_height="wrap_content" android:layout_width="fill_parent">
+        <TextView android:layout_height="wrap_content" android:id="@+id/textUser" android:layout_width="fill_parent" android:text="Slashdot" android:textStyle="bold" android:layout_weight="1"></TextView>
+        <TextView android:layout_height="wrap_content" android:id="@+id/textCreatedAt" android:layout_width="fill_parent" android:layout_weight="1" android:gravity="right" android:text="10mins ago"></TextView>
+    </LinearLayout>
+    <TextView android:text="firefox comes to android" android:id="@+id/textText" android:layout_width="fill_parent" android:layout_height="wrap_content"></TextView>
+        
+    
+</LinearLayout>
