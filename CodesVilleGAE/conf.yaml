@@ -1,0 +1,10 @@
+qanda.maxversion: 3
+
+c2dm.login.url: https://www.google.com/accounts/ClientLogin
+c2dm.email: codesville@gmail.com
+c2dm.pass: aspire2be
+c2dm.source: itechquiz
+c2dm.send.url: https://android.apis.google.com/c2dm/send
+c2dm.email: codesville@gmail.com
+c2dm.pass: aspire2be
+c2dm.source: itechquiz
