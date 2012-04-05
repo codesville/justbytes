@@ -1,8 +1,24 @@
 package com.justbytes.itechquiz.util;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
+
+import org.apache.http.HttpHost;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.params.ConnRoutePNames;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.DefaultProxyAuthenticationHandler;
+import org.apache.http.message.BasicNameValuePair;
 
 import android.content.Intent;
 import android.util.Log;
@@ -41,4 +57,26 @@ public class AppUtils {
 				+ " with body = " + body);
 		return mailIntent;
 	}
+
+	public static void postHttpRequest(String url, Map<String, String> params)
+			throws Exception {
+		DefaultHttpClient client = new DefaultHttpClient();
+		//TODO: Proxy setting only needed within firewall.Comment out before pushing out
+//		client.getCredentialsProvider().setCredentials(
+//				new AuthScope("blah", 8080),
+//				new UsernamePasswordCredentials("blah", "blah"));
+//		HttpHost proxy = new HttpHost("blah", 8080);
+//		client.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
+		
+		HttpPost post = new HttpPost(url);
+		List<NameValuePair> paramList = new ArrayList<NameValuePair>();
+		for (String key : params.keySet())
+			paramList.add(new BasicNameValuePair(key, params.get(key)));
+		post.setEntity(new UrlEncodedFormEntity(paramList));
+		Log.i("POST", "Sending request to " + url);
+		HttpResponse response = client.execute(post);
+		if (response != null)
+			Log.i("POST", response.getStatusLine().getStatusCode() + "");
+	}
+
 }

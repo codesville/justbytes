@@ -1,13 +1,17 @@
 package com.justbytes.itechquiz;
 
 
+
 public class QAndA {
 	private int id;
 	private int version;
 	private String question;
 	private String answer;
-	private String category;
+	//private String category;
 	private int topicId;
+	private String postedTime;
+	private String postedBy;
+	
 	
 	public int getId() {
 		return id;
@@ -28,18 +32,18 @@ public class QAndA {
 		this.answer = answer;
 	}
 	
-	public String getCategory() {
-		return category;
-	}
-	public void setCategory(String category) {
-		this.category = category;
-	}
+//	public String getCategory() {
+//		return category;
+//	}
+//	public void setCategory(String category) {
+//		this.category = category;
+//	}
 	
 	
 	@Override
 	public String toString() {
 		return "QAndA [id=" + id + ", question=" + question + ", answer="
-				+ answer + ", category=" + category + "]";
+				+ answer /*+ ", category=" + category*/ + "]";
 	}
 	public int getTopicId() {
 		return topicId;
@@ -52,6 +56,18 @@ public class QAndA {
 	}
 	public void setVersion(int version) {
 		this.version = version;
+	}
+	public String getPostedTime() {
+		return postedTime;
+	}
+	public void setPostedTime(String postedTime) {
+		this.postedTime = postedTime;
+	}
+	public String getPostedBy() {
+		return postedBy;
+	}
+	public void setPostedBy(String postedBy) {
+		this.postedBy = postedBy;
 	}
 
 	

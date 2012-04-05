@@ -15,4 +15,9 @@
     <string name="shareSubject">Check out this cool IT interview app.</string>
     <string name="shareMsg">Hi there, \n\n Check out this cool free app.\n Its got a ton of tech interview questions ranging from Java/J2EE,Struts,JMS,.NET,C#,SQL,Unix,Hibernate,Spring.\n\n Click on the link below to install the app: \n\n https://market.android.com/details?id=com.justbytes.itechquiz \n\n Thanks.</string>
 	<string name="fetchURL">http://codesville.appspot.com/ITechQuiz/getLatestQandA?ver=</string>
+	<string name="notfRegisterURL">http://codesville.appspot.com/ITechQuiz/register</string>
+	<string name="postQandAURL">http://codesville.appspot.com/ITechQuiz/postQandA</string>
+	<string name="postTopicLabelTxt">Topic</string>
+	<string name="postQuestionLabelTxt">Question</string>
+	<string name="postAnswerLabelTxt">Answer</string>
 </resources>

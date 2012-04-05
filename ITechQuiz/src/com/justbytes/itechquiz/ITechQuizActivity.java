@@ -1,5 +1,6 @@
 package com.justbytes.itechquiz;
 
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,6 +21,8 @@ public class ITechQuizActivity extends BaseActivity implements OnClickListener {
 	ImageButton unixButton;
 	ImageButton hibernateButton;
 	ImageButton springButton;
+	ImageButton postQandAButton;
+	
 
 	public static final String CATEGORY_KEY = "CATEGORY";
 
@@ -38,6 +41,7 @@ public class ITechQuizActivity extends BaseActivity implements OnClickListener {
 		unixButton = (ImageButton) findViewById(R.id.unixImgButton);
 		hibernateButton = (ImageButton) findViewById(R.id.hiberImgButton);
 		springButton = (ImageButton) findViewById(R.id.springImgButton);
+		postQandAButton = (ImageButton) findViewById(R.id.postQandAButton);
 
 		javaButton.setOnClickListener(this);
 		netButton.setOnClickListener(this);
@@ -45,7 +49,16 @@ public class ITechQuizActivity extends BaseActivity implements OnClickListener {
 		unixButton.setOnClickListener(this);
 		hibernateButton.setOnClickListener(this);
 		springButton.setOnClickListener(this);
+		postQandAButton.setOnClickListener(this);
 
+		Bundle bundle = this.getIntent().getExtras();
+		if (bundle != null) {
+			String msgNotification = bundle.getString("fetchNotification");
+			if (msgNotification != null) {
+				Log.i(TAG, "Received notification:" + msgNotification);
+				new FetchQuestionsTask().execute(new Void[] {});
+			}
+		}
 		// load pre-baked DB from assets folder
 		new DbLoadTask().execute(new Void[] {});
 
@@ -83,6 +96,9 @@ public class ITechQuizActivity extends BaseActivity implements OnClickListener {
 			intent = new Intent(this, QandAActivity.class);
 			bundle.putString(TopicsActivity.TOPIC_NAME_KEY, "All");
 			break;
+		case R.id.postQandAButton:
+			intent = new Intent(this, PostQandAActivity.class);
+			break;
 		}
 
 		bundle.putString(CATEGORY_KEY, category.toString());
@@ -102,11 +118,11 @@ public class ITechQuizActivity extends BaseActivity implements OnClickListener {
 				Log.e(TAG, ex.getMessage());
 				throw new Error("Unable to create database");
 			}
-			// try{
-			// dbAdapter.openDatabase();
-			// }catch(Exception ex){
-			// Log.e(TAG, ex.getMessage());
-			// }
+			try {
+				//registerDevice();
+			} catch (Exception ex) {
+				Log.e(TAG, "Error registering device:", ex);
+			}
 			return null;
 		}
 
@@ -120,6 +136,15 @@ public class ITechQuizActivity extends BaseActivity implements OnClickListener {
 			progBar.bringToFront();
 		}
 
+	}
+
+	public void registerDevice() {
+		Intent intent = new Intent("com.google.android.c2dm.intent.REGISTER");
+		intent.putExtra("app",
+				PendingIntent.getBroadcast(this, 0, new Intent(), 0));
+		intent.putExtra("sender", R.string.emailTo);
+		Log.i(TAG, "Registering with C2DM server");
+		startService(intent);
 	}
 
 }

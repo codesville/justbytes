@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -16,6 +18,7 @@ import android.content.res.AssetManager;
 import android.util.Log;
 
 import com.justbytes.itechquiz.QAndA;
+import com.justbytes.itechquiz.util.AppConstants;
 
 public class JsonAdapter {
 
@@ -67,17 +70,34 @@ public class JsonAdapter {
 	}
 
 	private QAndA buildQandA(final JSONObject jsonObj) throws JSONException {
+		final String JSON_POSTED_BY_COL = "username"; // TODO make them the same
+														// as SQLlite column
+														// name (posted_by)
 		QAndA qanda = new QAndA();
 		qanda.setQuestion(jsonObj.getString(DbAdapter.C_Q_A_QUESTION));
 		qanda.setAnswer(jsonObj.getString(DbAdapter.C_Q_A_ANSWER));
-		qanda.setCategory(jsonObj.getString(DbAdapter.C_TOPIC_CATEGORY));
+		// qanda.setCategory(jsonObj.getString(DbAdapter.C_TOPIC_CATEGORY));
 		qanda.setTopicId(jsonObj.getInt(DbAdapter.C_Q_A_TOPIC_ID));
-		try{
-			qanda.setVersion(jsonObj.getInt(DbAdapter.C_Q_A_VERSION));
-		}catch(Exception ex){
-			//do nothing.some files may not have version
+		try {
+			qanda.setPostedBy(jsonObj.getString(JSON_POSTED_BY_COL));
+
+		} catch (Exception ex) {
+			qanda.setPostedBy(AppConstants.ADMIN);
 		}
-		//System.out.println("Built row = " + qanda);
+		try {
+			qanda.setPostedTime(new SimpleDateFormat("yyyy-MM-dd")
+					.format(jsonObj.getString(DbAdapter.C_Q_A_POSTED_TIME)));
+		} catch (Exception ex) {
+			qanda.setPostedTime(new SimpleDateFormat("yyyy-MM-dd")
+					.format(new Date()));
+		}
+
+		try {
+			qanda.setVersion(jsonObj.getInt(DbAdapter.C_Q_A_VERSION));
+		} catch (Exception ex) {
+			// do nothing.some files may not have version
+		}
+
 		return qanda;
 	}
 }

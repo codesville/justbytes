@@ -1,5 +1,7 @@
 package com.justbytes.itechquiz;
 
+import java.text.SimpleDateFormat;
+
 import android.app.ExpandableListActivity;
 import android.content.Context;
 import android.database.Cursor;
@@ -10,6 +12,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.SimpleCursorTreeAdapter;
 import android.widget.SimpleCursorTreeAdapter.ViewBinder;
+import android.widget.TextView;
 
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
@@ -52,8 +55,9 @@ public class QandAActivity extends ExpandableListActivity {
 		// bind to adapter
 		cursorTreeAdapter = new QandACursorAdapter(this, cursor,
 				R.layout.qandagroup, R.layout.qandagroup, new String[] {
-						DbAdapter.C_Q_A_QUESTION, DbAdapter.C_ID },
-				new int[] { R.id.questionText }, R.layout.qandachild,
+						DbAdapter.C_Q_A_QUESTION, DbAdapter.C_Q_A_POSTED_BY,
+						DbAdapter.C_ID }, new int[] { R.id.questionText,
+						R.id.questionComment }, R.layout.qandachild,
 				R.layout.qandachild, new String[] { DbAdapter.C_Q_A_ANSWER },
 				new int[] { R.id.answertext });
 		cursorTreeAdapter.setViewBinder(VIEW_BINDER);
@@ -63,9 +67,7 @@ public class QandAActivity extends ExpandableListActivity {
 
 	@Override
 	protected void onResume() {
-
 		super.onResume();
-
 	}
 
 	@Override
@@ -78,7 +80,21 @@ public class QandAActivity extends ExpandableListActivity {
 
 		@Override
 		public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-			// Log.d(TAG, cursor.getString(columnIndex));
+
+			if (DbAdapter.C_Q_A_POSTED_BY.equalsIgnoreCase(cursor
+					.getColumnName(columnIndex))) {
+				TextView questionComment = (TextView) view
+						.findViewById(R.id.questionComment);
+				questionComment
+						.setText("By: "
+								+ cursor.getString(columnIndex)
+								+ "\nOn: "
+								+ cursor.getString(
+										cursor.getColumnIndex(DbAdapter.C_Q_A_POSTED_TIME))
+										.substring(0, 10));
+				return true;
+			}
+
 			return false;
 		}
 	};
@@ -98,11 +114,8 @@ public class QandAActivity extends ExpandableListActivity {
 
 		@Override
 		protected Cursor getChildrenCursor(Cursor groupCursor) {
-			// Log.d(TAG, "getChildernCusor");
 			Cursor cursor = dbAdapter.getAnswers(groupCursor.getInt(0));
-
 			startManagingCursor(cursor);
-
 			return cursor;
 		}
 

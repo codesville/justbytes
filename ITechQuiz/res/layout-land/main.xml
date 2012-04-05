@@ -28,6 +28,13 @@
                 android:textColor="@android:color/black"
                 android:textStyle="bold"
                 android:typeface="normal" />
+
+            <ImageButton
+                android:id="@+id/postQandAButton"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/postq"
+                android:clickable="true" />
         </TableRow>
 
         <TableRow
@@ -58,7 +65,7 @@
                     android:background="@drawable/dotnetlogo"
                     android:clickable="true"
                     android:onClick="com.justbytes.itechquiz.TechnoQuizActivity" />
-                
+
                 <ImageButton
                     android:id="@+id/sqlImgButton"
                     android:layout_width="50dp"
@@ -66,7 +73,6 @@
                     android:background="@drawable/sqllogo"
                     android:clickable="true"
                     android:onClick="com.justbytes.itechquiz.TechnoQuizActivity" />
-                
             </LinearLayout>
         </TableRow>
 
@@ -81,7 +87,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
 
-                
                 <ImageButton
                     android:id="@+id/unixImgButton"
                     android:layout_width="50dp"
@@ -90,7 +95,7 @@
                     android:background="@drawable/unixlogo"
                     android:clickable="true"
                     android:onClick="com.justbytes.itechquiz.TechnoQuizActivity" />
-                
+
                 <ImageButton
                     android:id="@+id/hiberImgButton"
                     android:layout_width="50dp"
@@ -109,10 +114,8 @@
                     android:onClick="com.justbytes.itechquiz.TechnoQuizActivity" />
             </LinearLayout>
         </TableRow>
-
-       
     </TableLayout>
-    
+
     <LinearLayout
         android:id="@+id/spinnerLayout"
         android:layout_width="wrap_content"

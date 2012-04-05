@@ -40,6 +40,8 @@ public class DbAdapter extends SQLiteOpenHelper {
 	public static final String C_Q_A_ANSWER = "answer";
 	public static final String C_Q_A_TOPIC_ID = "topic_id";
 	public static final String C_Q_A_VERSION = "version";
+	public static final String C_Q_A_POSTED_TIME = "posted_time";
+	public static final String C_Q_A_POSTED_BY = "posted_by";
 
 	public DbAdapter(Context context) {
 		super(context, DB_NAME, null, DB_VER);
@@ -67,7 +69,8 @@ public class DbAdapter extends SQLiteOpenHelper {
 			db = this.getReadableDatabase();
 			try {
 				copyDatabase();
-				// TEMP hack to load json files
+				// !!!!!!!!! WARNING: hack to load json files.Comment it out
+				// before pushing to market
 				// loadDataFromJsonFiles(ctx);
 			} catch (IOException e) {
 				throw new Error("Error copying database");
@@ -127,7 +130,7 @@ public class DbAdapter extends SQLiteOpenHelper {
 		db = getReadableDatabase();
 		Cursor cursor = db
 				.rawQuery(
-						"select q_and_a._id as _id, q_and_a.question,q_and_a.answer from q_and_a inner join topics on"
+						"select q_and_a._id as _id, q_and_a.question,q_and_a.answer,q_and_a.posted_by,q_and_a.posted_time from q_and_a inner join topics on"
 								+ " q_and_a.topic_id=topics._id where topics.category = ? and topics.title=?",
 						new String[] { category, topic });
 
@@ -232,10 +235,13 @@ public class DbAdapter extends SQLiteOpenHelper {
 				rowValues.put(C_Q_A_QUESTION, qanda.getQuestion());
 				rowValues.put(C_Q_A_ANSWER, qanda.getAnswer());
 				rowValues.put(C_Q_A_TOPIC_ID, qanda.getTopicId());
+				rowValues.put(C_Q_A_POSTED_BY, qanda.getPostedBy());
+				rowValues.put(C_Q_A_POSTED_TIME, qanda.getPostedTime());
+
 				// when inserting questions from assets folder, version may
-				// default to 0 if the files dont have version element.However
-				// the map is not used in that case. Its only used when fetching
-				// questions remotely
+				// default to 0 if the files don't have version element.However
+				// the map is not used in that case. The returned map is only
+				// used when fetching questions remotely
 				topicVersionMap.put(qanda.getTopicId(), qanda.getVersion());
 
 				db.insertWithOnConflict(Q_A_TABLE_NAME, null, rowValues,
