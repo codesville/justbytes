@@ -12,7 +12,7 @@ from yaml import load
 import c2dm
 import datetime
 import simplejson
-import sys
+import logging
 
  
 @route('/')
@@ -36,7 +36,7 @@ def GetLatestQandA():
         for i in range(userVer + 1, latestVer + 1):
             fh = None
             try:
-                sys.stderr.write('Loading file:' + 'upload/updates_' + str(i) + '.json ')
+                logging.info('Loading file:' + 'upload/updates_' + str(i) + '.json ')
                 fh = open('upload/updates_' + str(i) + '.json', 'r')
                 if fh:
                     # load json file
@@ -45,7 +45,7 @@ def GetLatestQandA():
                     outputDict['QandAList'].extend(jsonFile['QandAList']) 
                 
             except Exception, e:
-                sys.stderr.write('Exception reading file:%s' % str(e))
+                logging.error('Exception reading file:%s' % str(e))
             finally:
                 if fh:
                     fh.close()
@@ -62,7 +62,7 @@ def PostQandA():
     question = request.POST.get('question', '').strip()
     answer = request.POST.get('answer', '').strip()
     topicId = int(request.POST.get('topicId', '').strip())
-    postedTime = datetime.datetime.replace(tzinfo=datetime.tzinfo.EST).now()
+    postedTime = datetime.datetime.now() #Needs fixing to EST
     
     try:
         newVer = GetMaxVer() + 1
@@ -78,27 +78,40 @@ def PostQandA():
         sender = c2dm.C2DM()
         sender.clientAuth = token
         sender.collapseKey = 1
+        logging.info('Sending new QandA push notification...')
         sender.data = {'message':'New question has been posted.'}
         
         # send notification to each user
         for user in sender.getUsers():
+            logging.info('..to ' + user.registration_id)
             sender.registrationId = user.registration_id
             response = sender.sendMessage()
+            logging.info(response)
         
     except Exception, e:
-        sys.stderr.write('Failed to save QandA: %s' % str(e))
+        logging.error('Failed to save QandA: %s' % str(e))
     finally:
         pass
+        #sys.stderr.flush()
 
 @route('/ITechQuiz/register', method='POST')
 def Register():
     deviceId = request.POST.get('deviceId', '').strip()
-    emailId = request.POST.get('emailId', '').strip()
+    #emailId = request.POST.get('emailId', '').strip()
+    emailId = 'test'
     registrationId = request.POST.get('regId', '').strip()
-    
+    logging.info('Received request to register device owner %s' % registrationId)
     userInfo = c2dm.UserInfo(device_id=deviceId, email_id=emailId, registration_id=registrationId)
     # TODO: if regId changes, then need to update the regId and not insert new
-    db.put(userInfo)
+    query = db.GqlQuery('select * from UserInfo where device_id= :1', deviceId)
+    row = query.fetch(1)
+    if row:
+        logging.info('Found existing deviceId %s' % row[0])
+        logging.info('Updating registrationdId of device %s to %s' % (deviceId, registrationId))
+        row[0].registration_id = registrationId
+        db.put(row[0])
+    else:
+        db.put(userInfo)
 
 def GetLatestQandAFromDS(curVer):
     jsonList = []
@@ -117,12 +130,12 @@ def GetLatestQandAFromDS(curVer):
             qandaRow['version'] = qanda.version
             jsonList.append(qandaRow)
     except Exception, ex:
-        sys.stderr.write('Failed to query datastore: %s' % str(ex))
+        logging.error('Failed to query datastore: %s' % str(ex))
     
     qandaDict = {}
     if jsonList:
         qandaDict['QandAList'] = jsonList
-    #sys.stderr.write(qandaDict)
+    #logging.info(qandaDict)
     return qandaDict
 
 # Defaults to 1. Fetch max version of QandA from DS(for user uploads).
@@ -137,7 +150,7 @@ def GetMaxVer():
         confYaml = load(fh)
         maxVer = int(confYaml['qanda.maxversion'])
     except Exception, e:
-        sys.stderr.write('Failed to parse maxver.yaml:%s' % str(e))
+        logging.error('Failed to parse maxver.yaml:%s' % str(e))
     finally:
         fh.close();
     # Read max(version) from DS
@@ -148,7 +161,7 @@ def GetMaxVer():
     if row:
         dsVer = row[0].version
     maxVer = dsVer if dsVer > maxVer else maxVer
-    sys.stderr.write('Max version: %s' % maxVer)
+    logging.info('Max version: %s' % maxVer)
     return maxVer
     
 

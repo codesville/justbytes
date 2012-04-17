@@ -7,7 +7,7 @@ import urllib, urllib2
 from yaml import load
 import sys
 
-
+#unused
 class C2DMClientAuth(object):
     _token = None
     
@@ -16,7 +16,7 @@ class C2DMClientAuth(object):
         fh = open('conf.yaml')
         try:
             confYaml = load(fh)
-            self.url = confYaml['c2dm.url']
+            self.url = confYaml['c2dm.login.url']
             self.accountType = "GOOGLE"
             self.email = confYaml['c2dm.email']
             self.password = confYaml['c2dm.pass']

@@ -6,7 +6,7 @@ Created on Mar 12, 2012
 from google.appengine.ext import db
 import urllib, urllib2
 from yaml import load
-import sys
+import logging
 from urllib2 import URLError
 
 class C2DM(object):
@@ -14,6 +14,7 @@ class C2DM(object):
     def __init__(self):
         fh = open('conf.yaml')
         try:
+            logging.info('Loading c2dm configs...');
             confYaml = load(fh)
             self.url = confYaml['c2dm.send.url']
             self.clientAuth = None
@@ -21,39 +22,42 @@ class C2DM(object):
             self.collapseKey = None
             self.data = {}
         except Exception, e:
-            sys.stderr.write('Failed to parse conf.yaml:' + str(e.message))
+            logging.error('Failed to parse conf.yaml:' + str(e.message))
         finally:
             fh.close();
  
     def sendMessage(self):
+        logging.info('Sending push notification to C2DM server')
         if self.registrationId == None or self.collapseKey == None:
             return False
-        
-        for k, v in self.data.iteritems():
-            self.data['data.' + k] = v
-        
+        logging.info(str(self.data))
         values = {'registration_id' : self.registrationId,
                   'collapse_key' : self.collapseKey
                  }
-        headers = {'headers': 'GoogleLogin auth=' + self.clientAuth }
+        for k, v in self.data.iteritems():
+            values['data.' + k] = v
+        
+        #values.update(self.data)
+        headers = {'Authorization': 'GoogleLogin auth=' + self.clientAuth }
         data = urllib.urlencode(values)
+        logging.info('Sending push notification to C2DM server %s with values %s and headers %s ' % (self.url, str(data), str(headers)))
         request = urllib2.Request(self.url, data, headers)
         
         try:
             response = urllib2.urlopen(request)
             responseString = response.read()
-            sys.stderr.write(responseString)
+            logging.info('Received response for push notification:' + responseString)
             
         except URLError, e:
-            sys.stderr.write("URLError: " + str(e))
+            logging.error("URLError: " + str(e))
             responseCode = e.code
-            sys.stderr.write(responseCode)
+            logging.error(responseCode)
         
         return responseString
         
     def getUsers(self):
         query = db.Query(UserInfo)
-        return query.fetch(1000000)
+        return query.fetch(1000)
          
 
 class UserInfo(db.Model):
@@ -77,7 +81,7 @@ class C2DMClientAuth(object):
             self.source = confYaml['c2dm.source']
             self.service = 'ac2dm'
         except Exception, e:
-            sys.stderr.write('Failed to parse conf.yaml:' + str(e.message))
+            logging.error('Failed to parse conf.yaml:' + str(e.message))
         finally:
             fh.close();
 
@@ -90,6 +94,7 @@ class C2DMClientAuth(object):
                       'source' : self.source,
                       'service' : self.service
                      }
+            #logging.info('Get client login token request: ' + str(values))
             data = urllib.urlencode(values)
             request = urllib2.Request(self.url, data)
             
@@ -97,7 +102,12 @@ class C2DMClientAuth(object):
             responseAsString = response.read()
             
             responseList = responseAsString.split('\n')
-            sys.stderr.write(responseAsString)
-            self._token = responseList[2].split['='][1]
+            #logging.info('Received token response: ' + responseAsString)
+            logging.info('Received token list: ' + str(responseList))
+            for record in responseList:
+                if record.split('=')[0] == 'Auth':
+                    self._token = record.split('=')[1]
+            logging.info('Token: ' + self._token)
+        #    sys.stderr.flush()
         return self._token
     
