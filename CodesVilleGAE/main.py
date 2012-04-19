@@ -73,20 +73,29 @@ def PostQandA():
         db.put(qanda)
         
         # notify C2DM servers
+        
         clientAuth = c2dm.C2DMClientAuth()
         token = clientAuth.getToken()
         sender = c2dm.C2DM()
         sender.clientAuth = token
         sender.collapseKey = 1
-        logging.info('Sending new QandA push notification...')
-        sender.data = {'message':'New question has been posted.'}
+        
+        query = db.GqlQuery('select * from Topics where topic_id = :1', topicId)
+        row = query.fetch(1)
+        msg = 'New ' + row[0].category
+        if row[0].title != 'All':
+            msg += '(' + row[0].title + ')' 
+        msg += ' question has been posted.' 
+        #logging.info('Sending new QandA push notification...' + msg)
+        
+        sender.data = {'message':msg}
         
         # send notification to each user
         for user in sender.getUsers():
-            logging.info('..to ' + user.registration_id)
+            #logging.info('..to ' + user.registration_id)
             sender.registrationId = user.registration_id
             response = sender.sendMessage()
-            logging.info(response)
+            #logging.info(response)
         
     except Exception, e:
         logging.error('Failed to save QandA: %s' % str(e))
@@ -174,11 +183,47 @@ class QandA(db.Model):
     topic_id = db.IntegerProperty(required=True)
     posted_time = db.DateTimeProperty()
     
-            
+
+class Topics(db.Model):
+    topic_id = db.IntegerProperty(required=True)
+    version = db.IntegerProperty(required=True)
+    title = db.StringProperty(required=True)
+    category = db.StringProperty(required=True)
+    
+def loadTopics():
+    topArray = []
+    topArray.append(Topics(topic_id=1, version=1, title='Fundamentals', category='Java'))
+    topArray.append(Topics(topic_id=2, version=1, title='Classes/Objects', category='Java'))
+    topArray.append(Topics(topic_id=3, version=1, title='JVM/GC', category='Java'))
+    topArray.append(Topics(topic_id=5, version=1, title='Collections', category='Java'))
+    topArray.append(Topics(topic_id=6, version=1, title='Design Patterns', category='Java'))
+    topArray.append(Topics(topic_id=7, version=1, title='Exceptions', category='Java'))
+    topArray.append(Topics(topic_id=8, version=1, title='Persistence', category='Java'))
+    topArray.append(Topics(topic_id=9, version=1, title='File I/O and Networking', category='Java'))
+    topArray.append(Topics(topic_id=10, version=1, title='Threads', category='Java'))
+    topArray.append(Topics(topic_id=11, version=1, title='Basics/Framework', category='.NET'))
+    topArray.append(Topics(topic_id=12, version=1, title='OOPS/C#', category='.NET'))
+    topArray.append(Topics(topic_id=13, version=1, title='ASP.NET', category='.NET'))
+    topArray.append(Topics(topic_id=14, version=1, title='ADO.NET', category='.NET'))
+    topArray.append(Topics(topic_id=15, version=1, title='LINQ', category='.NET'))
+    topArray.append(Topics(topic_id=16, version=1, title='WCF', category='.NET'))
+    topArray.append(Topics(topic_id=17, version=1, title='WPF/Silverlight', category='.NET'))
+    topArray.append(Topics(topic_id=18, version=1, title='Design Patterns', category='.NET'))
+    topArray.append(Topics(topic_id=19, version=1, title='All', category='Sql'))
+    topArray.append(Topics(topic_id=20, version=1, title='All', category='Unix'))
+    topArray.append(Topics(topic_id=21, version=1, title='All', category='Hibernate'))
+    topArray.append(Topics(topic_id=22, version=1, title='All', category='Spring'))
+    topArray.append(Topics(topic_id=23, version=1, title='Servlets', category='Java'))
+    topArray.append(Topics(topic_id=24, version=1, title='Struts', category='Java'))
+    topArray.append(Topics(topic_id=25, version=1, title='JMS', category='Java'))
+    
+    for top in topArray:
+        db.put(top)
      
 def main():
     debug(True)
     run_wsgi_app(bottle.default_app())
+    loadTopics()
     
     
 #def uploadFile():

@@ -14,7 +14,7 @@ class C2DM(object):
     def __init__(self):
         fh = open('conf.yaml')
         try:
-            logging.info('Loading c2dm configs...');
+            #logging.info('Loading c2dm configs...');
             confYaml = load(fh)
             self.url = confYaml['c2dm.send.url']
             self.clientAuth = None
@@ -27,10 +27,9 @@ class C2DM(object):
             fh.close();
  
     def sendMessage(self):
-        logging.info('Sending push notification to C2DM server')
+        #logging.info('Sending push notification to C2DM server')
         if self.registrationId == None or self.collapseKey == None:
             return False
-        logging.info(str(self.data))
         values = {'registration_id' : self.registrationId,
                   'collapse_key' : self.collapseKey
                  }
