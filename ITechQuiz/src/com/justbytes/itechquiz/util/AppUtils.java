@@ -10,6 +10,7 @@ import java.util.Set;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.StatusLine;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.HttpClient;
@@ -58,16 +59,17 @@ public class AppUtils {
 		return mailIntent;
 	}
 
-	public static void postHttpRequest(String url, Map<String, String> params)
+	public static int postHttpRequest(String url, Map<String, String> params)
 			throws Exception {
 		DefaultHttpClient client = new DefaultHttpClient();
-		//TODO: Proxy setting only needed within firewall.Comment out before pushing out
+		// TODO: Proxy setting only needed within firewall.Comment out before
+		// pushing out
 //		client.getCredentialsProvider().setCredentials(
-//				new AuthScope("blah", 8080),
-//				new UsernamePasswordCredentials("blah", "blah"));
-//		HttpHost proxy = new HttpHost("blah", 8080);
+//				new AuthScope("webproxy.bankofamerica.com", 8080),
+//				new UsernamePasswordCredentials("nbkgl14", "happy0be"));
+//		HttpHost proxy = new HttpHost("webproxy.bankofamerica.com", 8080);
 //		client.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
-		
+
 		HttpPost post = new HttpPost(url);
 		List<NameValuePair> paramList = new ArrayList<NameValuePair>();
 		for (String key : params.keySet())
@@ -77,6 +79,7 @@ public class AppUtils {
 		HttpResponse response = client.execute(post);
 		if (response != null)
 			Log.i("POST", response.getStatusLine().getStatusCode() + "");
+		return response.getStatusLine().getStatusCode();
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.justbytes.itechquiz.data;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,7 +26,8 @@ public class DbAdapter extends SQLiteOpenHelper {
 
 	public static String DB_PATH = "/data/data/com.justbytes.itechquiz/databases/";
 	public static final String DB_NAME = "itechquiz.db";
-	public static final int DB_VER = 1;
+	// Upgrade this version for every change in schema
+	public static final int DB_VER = 2;
 	public static final String Q_A_TABLE_NAME = "q_and_a";
 	public static final String TOPICS_TABLE_NAME = "topics";
 
@@ -57,12 +59,44 @@ public class DbAdapter extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		Log.i(TAG, "OnUpgrade called.Deleting old DB version(" + oldVersion
+				+ ").Upgrading to new version(" + newVersion + ")");
+
+		try {
+			File dbFile = new File(dbAbsoluteFileName);
+			if (dbFile.exists()) {
+				boolean outcome = dbFile.delete();
+				Log.i(TAG, "Old db file deleted:" + outcome);
+			}
+		} catch (Exception ex) {
+			Log.e(TAG, "Error deleting old DB:", ex);
+		}
 
 	}
 
 	public void createDatabase() throws IOException {
 		if (isDbExists()) {
-			// do nothing
+			
+			db = openDatabase();
+			Log.i(TAG, "Existing DB version(" + db.getVersion()
+					+ ").New version(" + DB_VER + ")");
+			try {
+				if (db.getVersion() < DB_VER) {
+					boolean deleteFlag = false;
+					File dbFile = new File(dbAbsoluteFileName);
+					if (dbFile.exists()) {
+						deleteFlag = dbFile.delete();
+						Log.i(TAG, "Old db file deleted:" + deleteFlag);
+					}
+
+					Log.d(TAG, "Copying prebaked database from assets");
+					db = this.getReadableDatabase();
+					copyDatabase();
+
+				}
+			} catch (Exception ex) {
+				Log.e(TAG, "Error deleting/recreating DB:", ex);
+			}
 
 		} else {
 			Log.d(TAG, "Copying prebaked database from assets");
@@ -79,8 +113,8 @@ public class DbAdapter extends SQLiteOpenHelper {
 
 	}
 
-	public void openDatabase() {
-		SQLiteDatabase.openDatabase(dbAbsoluteFileName, null,
+	public SQLiteDatabase openDatabase() {
+		return SQLiteDatabase.openDatabase(dbAbsoluteFileName, null,
 				SQLiteDatabase.OPEN_READONLY);
 	}
 

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -77,17 +78,29 @@ public class BaseActivity extends Activity {
 					AppUtils.PLAIN_TEXT);
 			startActivity(Intent.createChooser(shareIntent, "Share using..."));
 			break;
+		case R.id.itemPost:
+			Intent postIntent = new Intent(this, PostQandAActivity.class);
+			startActivity(postIntent);
+			break;
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
 	class FetchQuestionsTask extends AsyncTask<Void, Void, Integer> {
 		RemoteDataFetcher dataFetcher;
+		ProgressDialog progDiag = null;
+
+		@Override
+		protected void onPreExecute() {
+			progDiag = ProgressDialog.show(BaseActivity.this,
+					"Fetching latest QandA", "Please wait...", true, true);
+		}
 
 		@Override
 		protected Integer doInBackground(Void... params) {
 			int fetchCount = 0;
 			try {
+				publishProgress(new Void[0]);
 				dataFetcher = new RemoteDataFetcher();
 				// fetch latest
 				List<QAndA> qandaList = dataFetcher
@@ -109,6 +122,8 @@ public class BaseActivity extends Activity {
 		protected void onPostExecute(Integer result) {
 			Log.d("POSTExec", result + " rows fetched");
 			String message = "";
+			if (progDiag != null)
+				progDiag.dismiss();
 			if (result == 0) {
 				message = "Questions are up-to-date.Nothing new to fetch.";
 			} else {

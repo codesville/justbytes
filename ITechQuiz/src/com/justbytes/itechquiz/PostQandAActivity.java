@@ -3,8 +3,13 @@ package com.justbytes.itechquiz;
 import java.util.Hashtable;
 import java.util.Map;
 
+import org.apache.http.HttpStatus;
+
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,6 +22,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -76,7 +82,8 @@ public class PostQandAActivity extends Activity implements OnClickListener,
 			if (TextUtils.isEmpty(userName))
 				userName = "Anonymous";
 			if (!TextUtils.isEmpty(question) && !TextUtils.isEmpty(answer)) {
-				postQandA(userName, question, answer, topicId);
+				new PostQandAAsyncTask().execute(new String[] { userName,
+						question, answer, topicId + "" });
 			} else {
 				Toast.makeText(this, "Please enter valid question/answer",
 						Toast.LENGTH_LONG).show();
@@ -87,18 +94,56 @@ public class PostQandAActivity extends Activity implements OnClickListener,
 
 	}
 
-	private void postQandA(String userName, String question, String answer,
-			long topicId) {
-		try {
-			Map<String, String> params = new Hashtable<String, String>();
-			params.put("username", userName);
-			params.put("question", question);
-			params.put("topicId", topicId + "");
-			params.put("answer", answer);
-			AppUtils.postHttpRequest(this.getString(R.string.postQandAURL),
-					params);
-		} catch (Exception ex) {
-			Log.e("PostQandA", "Error:", ex);
+	class PostQandAAsyncTask extends AsyncTask<String, Void, Integer> {
+		ProgressDialog progDiag = null;
+
+		@Override
+		protected void onPreExecute() {
+			progDiag = ProgressDialog.show(PostQandAActivity.this,
+					"Submitting QandA", "Please wait...", true, true);
+		}
+
+		@Override
+		protected Integer doInBackground(String... params) {
+			int sc = HttpStatus.SC_OK;
+			try {
+				Map<String, String> paramMap = new Hashtable<String, String>();
+				paramMap.put("username", params[0]);
+				paramMap.put("question", params[1]);
+				paramMap.put("answer", params[2]);
+				paramMap.put("topicId", params[3]);
+				publishProgress(new Void[0]);
+				sc = AppUtils.postHttpRequest(getString(R.string.postQandAURL),
+						paramMap);
+
+			} catch (Exception ex) {
+				Log.e("PostQandA", "Error:", ex);
+			}
+
+			return sc;
+		}
+
+		@Override
+		protected void onPostExecute(Integer result) {
+
+			if (progDiag != null)
+				progDiag.dismiss();
+			if (result == HttpStatus.SC_OK) {
+				Toast.makeText(PostQandAActivity.this,
+						"Successfully posted your question/answer.Thanks!",
+						Toast.LENGTH_LONG).show();
+				Intent intent = new Intent(getApplicationContext(),
+						ITechQuizActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+
+				startActivity(intent);
+			}
+
+		}
+
+		@Override
+		protected void onProgressUpdate(Void... values) {
+
 		}
 
 	}
@@ -112,8 +157,8 @@ public class PostQandAActivity extends Activity implements OnClickListener,
 		Cursor topicSpinnerCursor = dbAdapter.getTopics(category);
 		startManagingCursor(topicSpinnerCursor);
 		SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(this,
-				android.R.layout.simple_spinner_dropdown_item,
-				topicSpinnerCursor, new String[] { DbAdapter.C_TOPIC_TITLE },
+				android.R.layout.simple_spinner_item, topicSpinnerCursor,
+				new String[] { DbAdapter.C_TOPIC_TITLE },
 				new int[] { android.R.id.text1 });
 		topicSpinner.setAdapter(cursorAdapter);
 

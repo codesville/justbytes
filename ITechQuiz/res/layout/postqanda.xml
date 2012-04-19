@@ -5,35 +5,45 @@
     android:background="@drawable/starburst"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/postScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:layout_height="match_parent"
+        android:layout_above="@+id/postQandaAdLayout" >
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="25dp" >
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/postTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="20dp"
+                android:background="@layout/button_shape"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="Share your own interview question/answer with the community!"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/black" />
 
             <EditText
                 android:id="@+id/postUsernameText"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Name"
+                android:layout_below="@+id/postTextView"
+                android:layout_marginBottom="20dp"
+                android:alpha="1"
+                android:hint="Username"
                 android:inputType="textPersonName" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="25dp" >
 
             <Spinner
                 android:id="@+id/categorySpinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/postUsernameText"
+                android:layout_marginBottom="20dp"
                 android:entries="@array/categories"
                 android:prompt="@string/postTopicLabelTxt" />
 
@@ -41,53 +51,48 @@
                 android:id="@+id/topicSpinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/postUsernameText"
+                android:layout_marginBottom="20dp"
                 android:layout_marginLeft="50dp"
-                android:prompt="@string/postTopicLabelTxt" android:spinnerMode="dropdown"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="25dp" >
+                android:layout_toRightOf="@+id/categorySpinner"
+                android:prompt="@string/postTopicLabelTxt"
+                android:spinnerMode="dropdown" />
 
             <EditText
                 android:id="@+id/postQuestionText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter your question here"
+                android:layout_below="@+id/categorySpinner"
+                android:layout_marginBottom="20dp"
+                android:alpha="1"
+                android:hint="Enter question here"
                 android:inputType="textMultiLine"
-                android:minLines="4" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="25dp" >
+                android:minLines="2" />
 
             <EditText
                 android:id="@+id/postAnswerText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter your answer here"
+                android:layout_below="@+id/postQuestionText"
+                android:layout_marginBottom="20dp"
+                android:alpha="1"
+                android:hint="Enter answer here"
                 android:inputType="textMultiLine"
-                android:minLines="4" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="25dp" >
+                android:minLines="2" />
 
             <Button
                 android:id="@+id/postQandASubmit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Submit" />
-        </LinearLayout>
-    </LinearLayout>
+                android:layout_below="@+id/postAnswerText"
+                android:layout_centerInParent="true"
+                android:background="@layout/button_shape"
+                android:height="50dp"
+                android:text="Submit"
+                android:textStyle="bold"
+                android:width="120dp" />
+        </RelativeLayout>
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/postQandaAdLayout"

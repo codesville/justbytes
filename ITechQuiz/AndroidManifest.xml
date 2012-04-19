@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.justbytes.itechquiz"
-    android:versionCode="3"
+    android:versionCode="5"
     android:versionName="2.1" >
 
     <uses-sdk android:minSdkVersion="8" />
@@ -39,20 +39,20 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
  
         <receiver
-            android:name=".C2DMRegistrationReceiver"
+            android:name=".notification.C2DMRegistrationReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-                <category android:name="com.justbytes.itechquiz.notification"/>
+                <category android:name="com.justbytes.itechquiz"/>
             </intent-filter>
         </receiver>
         
         <receiver
-            android:name=".C2DMMessageReceiver"
+            android:name=".notification.C2DMMessageReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <category android:name="com.justbytes.itechquiz.notification"/>
+                <category android:name="com.justbytes.itechquiz"/>
             </intent-filter>
         </receiver>
       

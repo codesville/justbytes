@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -14,19 +14,20 @@
     <ListView
         android:id="@+id/topicsListView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@drawable/starburst"
         android:cacheColorHint="@android:color/transparent"
         android:clickable="true"
         android:divider="@color/bgColorCyan"
         android:dividerHeight="1dp" 
-        android:layout_weight="4">
+        android:layout_above="@+id/topicsAdLayout">
     </ListView>
 
     <LinearLayout
         android:id="@+id/topicsAdLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_alignParentBottom="true"
+         />
 
-</LinearLayout>
+</RelativeLayout>

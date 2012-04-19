@@ -1,6 +1,7 @@
 package com.justbytes.itechquiz;
 
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -22,7 +23,6 @@ public class ITechQuizActivity extends BaseActivity implements OnClickListener {
 	ImageButton hibernateButton;
 	ImageButton springButton;
 	ImageButton postQandAButton;
-	
 
 	public static final String CATEGORY_KEY = "CATEGORY";
 
@@ -55,12 +55,44 @@ public class ITechQuizActivity extends BaseActivity implements OnClickListener {
 		if (bundle != null) {
 			String msgNotification = bundle.getString("fetchNotification");
 			if (msgNotification != null) {
-				Log.i(TAG, "Received notification:" + msgNotification);
+				Log.i(TAG, "onCreate::Received notification:" + msgNotification);
 				new FetchQuestionsTask().execute(new Void[] {});
+				this.getIntent().removeExtra("fetchNotification");
 			}
 		}
 		// load pre-baked DB from assets folder
 		new DbLoadTask().execute(new Void[] {});
+
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		Bundle bundle = this.getIntent().getExtras();
+		if (bundle != null) {
+			String msgNotification = bundle.getString("fetchNotification");
+			if (msgNotification != null) {
+				Log.i(TAG, "onResume::Received notification:" + msgNotification);
+				new FetchQuestionsTask().execute(new Void[] {});
+				this.getIntent().removeExtra("fetchNotification");
+			}
+		}
+
+	}
+
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		Bundle bundle = this.getIntent().getExtras();
+		if (bundle != null) {
+			String msgNotification = bundle.getString("fetchNotification");
+			if (msgNotification != null) {
+				Log.i(TAG, "onRestart::Received notification:"
+						+ msgNotification);
+				new FetchQuestionsTask().execute(new Void[] {});
+				this.getIntent().removeExtra("fetchNotification");
+			}
+		}
 
 	}
 
@@ -107,11 +139,19 @@ public class ITechQuizActivity extends BaseActivity implements OnClickListener {
 	}
 
 	class DbLoadTask extends AsyncTask<Void, Void, Void> {
-		ProgressBar progBar = (ProgressBar) findViewById(R.id.mainProgressBar);
+		// ProgressBar progBar = (ProgressBar)
+		// findViewById(R.id.mainProgressBar);
+		ProgressDialog progDiag = null;
+
+		@Override
+		protected void onPreExecute() {
+			progDiag = ProgressDialog.show(ITechQuizActivity.this,
+					"Loading...", "Please wait...", true, true);
+		}
 
 		@Override
 		protected Void doInBackground(Void... params) {
-
+			publishProgress(new Void[0]);
 			try {
 				dbAdapter.createDatabase();
 			} catch (Exception ex) {
@@ -119,7 +159,7 @@ public class ITechQuizActivity extends BaseActivity implements OnClickListener {
 				throw new Error("Unable to create database");
 			}
 			try {
-				//registerDevice();
+				registerDevice();
 			} catch (Exception ex) {
 				Log.e(TAG, "Error registering device:", ex);
 			}
@@ -128,12 +168,14 @@ public class ITechQuizActivity extends BaseActivity implements OnClickListener {
 
 		@Override
 		protected void onPostExecute(Void result) {
-			progBar.setVisibility(View.GONE);
+			// progBar.setVisibility(View.GONE);
+			if (progDiag != null)
+				progDiag.dismiss();
 		}
 
 		@Override
 		protected void onProgressUpdate(Void... values) {
-			progBar.bringToFront();
+			// progBar.bringToFront();
 		}
 
 	}
@@ -142,7 +184,7 @@ public class ITechQuizActivity extends BaseActivity implements OnClickListener {
 		Intent intent = new Intent("com.google.android.c2dm.intent.REGISTER");
 		intent.putExtra("app",
 				PendingIntent.getBroadcast(this, 0, new Intent(), 0));
-		intent.putExtra("sender", R.string.emailTo);
+		intent.putExtra("sender", getString(R.string.c2dmSenderEmail));
 		Log.i(TAG, "Registering with C2DM server");
 		startService(intent);
 	}
