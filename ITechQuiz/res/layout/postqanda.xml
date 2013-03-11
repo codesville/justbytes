@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/starburst"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:id="@+id/postScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/postQandaAdLayout" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/postTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="20dp"
+                android:background="@layout/button_shape"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="Share your own interview question/answer with the community!"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:id="@+id/postUsernameText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/postTextView"
+                android:layout_marginBottom="20dp"
+                android:alpha="1"
+                android:hint="Username"
+                android:inputType="textPersonName" />
+
+            <Spinner
+                android:id="@+id/categorySpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/postUsernameText"
+                android:layout_marginBottom="20dp"
+                android:entries="@array/categories"
+                android:prompt="@string/postTopicLabelTxt" />
+
+            <Spinner
+                android:id="@+id/topicSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/postUsernameText"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="50dp"
+                android:layout_toRightOf="@+id/categorySpinner"
+                android:prompt="@string/postTopicLabelTxt"
+                android:spinnerMode="dropdown" />
+
+            <EditText
+                android:id="@+id/postQuestionText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/categorySpinner"
+                android:layout_marginBottom="20dp"
+                android:alpha="1"
+                android:hint="Enter question here"
+                android:inputType="textMultiLine"
+                android:minLines="2" />
+
+            <EditText
+                android:id="@+id/postAnswerText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/postQuestionText"
+                android:layout_marginBottom="20dp"
+                android:alpha="1"
+                android:hint="Enter answer here"
+                android:inputType="textMultiLine"
+                android:minLines="2" />
+
+            <Button
+                android:id="@+id/postQandASubmit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/postAnswerText"
+                android:layout_centerInParent="true"
+                android:background="@layout/button_shape"
+                android:height="50dp"
+                android:text="Submit"
+                android:textStyle="bold"
+                android:width="120dp" />
+        </RelativeLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/postQandaAdLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/starburst"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:id="@+id/mainScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/mainAdLayout" >
+
+        <TableLayout
+            android:id="@+id/mainTableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TableRow
+                android:id="@+id/tableRow4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@layout/button_shape"
+                android:gravity="center" >
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/app_name"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@android:color/black"
+                    android:textSize="40sp"
+                    android:textStyle="bold"
+                    android:typeface="normal" />
+
+                <ImageButton
+                    android:id="@+id/postQandAButton"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="@drawable/postq"
+                    android:clickable="true" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="100dp" >
+
+                <LinearLayout
+                    android:id="@+id/linearLayout1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <ImageButton
+                        android:id="@+id/javaImgButton"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginRight="400dp"
+                        android:background="@drawable/javalogo"
+                        android:clickable="true" />
+
+                    <ImageButton
+                        android:id="@+id/netImgButton"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginRight="350dp"
+                        android:background="@drawable/dotnetlogo"
+                        android:clickable="true" />
+
+                    <ImageButton
+                        android:id="@+id/sqlImgButton"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:background="@drawable/sqllogo"
+                        android:clickable="true" />
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="100dp" >
+
+                <LinearLayout
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <ImageButton
+                        android:id="@+id/unixImgButton"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginRight="400dp"
+                        android:background="@drawable/unixlogo"
+                        android:clickable="true" />
+
+                    <ImageButton
+                        android:id="@+id/hiberImgButton"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginRight="350dp"
+                        android:background="@drawable/hibernate"
+                        android:clickable="true" />
+
+                    <ImageButton
+                        android:id="@+id/springImgButton"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:background="@drawable/spring"
+                        android:clickable="true" />
+                </LinearLayout>
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+    <!--
+    <LinearLayout
+        android:id="@+id/spinnerLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" >
+
+        <ProgressBar
+            android:id="@+id/mainProgressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:indeterminateOnly="true" />
+    </LinearLayout>
+    -->
+
+    <LinearLayout
+        android:id="@+id/mainAdLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>

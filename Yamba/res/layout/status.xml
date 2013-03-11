@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="match_parent"
+	android:layout_height="match_parent" android:background="@drawable/bg">
+
+	<TextView android:layout_width="match_parent" android:id="@+id/textView1"
+		android:textSize="30sp" android:gravity="center"
+		android:layout_margin="10dp" android:layout_height="wrap_content" 
+		android:textColor="@android:color/white" 
+		android:text="@string/titleStatus"></TextView>
+		
+	<TextView android:text="000" android:id="@+id/textCounter"
+		android:layout_width="wrap_content" android:layout_height="wrap_content" 
+		android:layout_gravity="right" android:textSize="20sp" android:layout_marginRight="10dp">
+	</TextView>
+
+	<EditText android:layout_width="match_parent"
+		android:layout_height="match_parent" android:layout_weight="1"
+		android:hint="@string/hintText" android:gravity="top|center_horizontal"
+		android:id="@+id/editText1" android:background="#cfff">
+	</EditText>
+
+	<Button android:id="@+id/buttonUpdate" android:layout_width="match_parent"
+		android:layout_height="wrap_content" android:text="@string/buttonUpdate"
+		android:textSize="20sp" android:onClick="com.justbytes.">
+	</Button>
+</LinearLayout>

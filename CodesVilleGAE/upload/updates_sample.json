@@ -1,0 +1,7 @@
+{"QandAList":
+	[
+		{"version":"2","category":"Java","topic_id":"2","question":"What restrictions are placed on method overloading?","answer":"Two methods may not have the same name and argument list but different return types."},
+		{"version":"2","category":"Java","topic_id":"2","question":"Can a private method of a superclass be declared within a subclass?","answer":"Sure. A private field or method or inner class belongs to its declared class and hides from its subclasses.There is no way for private stuff to have a runtime overloading or overriding (polymorphism) features."},
+		{"version":"2","category":"Java","topic_id":"2","question":"What is the difference between a constructor and a method?","answer":"A constructor is a member function of a class that is used to create objects of that class, invoked using the new operator. It has the same name as the class and has no return type. They are only called once, whereas member functions can be called many times. A method is an ordinary member function of a class. It has its own name, a return type (which may be void), and is invoked using the dot operator. Constructor will be automatically invoked when an object is created whereas method has to be called explicitly."}
+	]
+}

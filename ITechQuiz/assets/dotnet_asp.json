@@ -1,0 +1,18 @@
+{"QandAList":
+	[
+				{"category":".NET","topic_id":"13","question":"What's the sequence in which ASP.NET events are processed ?","answer":"Page_Init. Page_Load. Control events. Page_Unload event."},
+				{"category":".NET","topic_id":"13","question":"In which event are the controls fully loaded ?","answer":"Page_load event guarantees that all controls are fully loaded.Controls are also accessed in Page_Init events but you will see that view state is not fully loaded during this event."},
+				{"category":".NET","topic_id":"13","question":"How can we identify that the Page is PostBack ?","answer":"Page object has a 'IsPostBack' property which can be checked to know that is the page posted back."},
+				{"category":".NET","topic_id":"13","question":"How do we assign page specific attributes ?","answer":"Page attributes are specified using the @Page directive."},
+				{"category":".NET","topic_id":"13","question":"What's the use of 'GLOBAL.ASAX' file ?","answer":"It allows to execute ASP.NET application level events and set application-level variables."},
+				{"category":".NET","topic_id":"13","question":"What's the use of SmartNavigation property ?","answer":"It's a feature provided by ASP.NET to prevent flickering and redrawing when the page is posted back."},
+				{"category":".NET","topic_id":"13","question":"what is 'AutoPostBack' feature in ASP.NET ?","answer":"If we want the control to automatically postback in case of any event , we will need to check this attribute as true.Example on a ComboBox change we need to send the event immediately to the server side then set the 'AutoPostBack' attribute to true."},
+				{"category":".NET","topic_id":"13","question":"How many types of validation controls are provided by ASP.NET ?","answer":"There are main six types of validation controls :- RequiredFieldValidator:It checks does the control have any value.It's used when you want the control should not be empty.RangeValidator:Checks if the value in validated control is in that specific range. CompareValidator: Checks that the value in controls should match the value in other control. RegularExpressionValidator: When we want the control value should match with a specific regular expression."},
+				{"category":".NET","topic_id":"13","question":"What's the use of @ Register directives ?","answer":"@Register directive informs the compiler of any custom server control added to the page."},
+				{"category":".NET","topic_id":"13","question":"What's the difference between 'Web.config' and 'Machine.Config' ?","answer":"'Web.config' files apply settings to each web application , while 'Machine.config' file apply settings to all ASP.NET applications."},
+				{"category":".NET","topic_id":"13","question":"What's a SESSION and APPLICATION object ?","answer":"Session object store information between HTTP request for a particular user.While application object are global across users."},
+				{"category":".NET","topic_id":"13","question":"Which JavaScript file is referenced for validating the validators at the client side ?","answer":"WebUIValidation.js javascript file installed at 'aspnet_client' root IIS directory is used to validate the validation controls at the client side"},
+				{"category":".NET","topic_id":"13","question":"How to disable client side script in validators?","answer":"Set EnableClientScript to false."},
+				{"category":".NET","topic_id":"13","question":"How do we enable tracing ?","answer":"<%@ Page Trace='true' %>"}
+	]
+}

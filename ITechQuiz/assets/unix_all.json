@@ -1,0 +1,25 @@
+{"QandAList":
+	[
+				{"category":"Unix","topic_id":"20","question":"How to find which operating system your system is running on in UNIX?","answer":"uname -a"},
+				{"category":"Unix","topic_id":"20","question":"How do you copy file from one host to other?","answer":"Using 'scp' command. You can also use rsync or sftp command"},
+				{"category":"Unix","topic_id":"20","question":"How do you find which process is taking how much CPU?","answer":"using 'top' command in UNIX"},
+				{"category":"Unix","topic_id":"20","question":"How do you check how much space left in current drive ?","answer":"df -h"},
+				{"category":"Unix","topic_id":"20","question":"How to find all text files containing a certain word?","answer":"find . -type f -name '*.log' -exec grep 'word' {} \\;  Or you can also use xargs. find . -type f -name '*.log' | xargs grep 'word' "},
+				{"category":"Unix","topic_id":"20","question":"How to find files which are some days old and greater than some size in Unix?","answer":"find . -mtime +10 -size +50000c -exec ls -l {} \\; "},
+				{"category":"Unix","topic_id":"20","question":"What is the difference between cmp and diff commands?","answer":"cmp - Compares two files byte by byte and displays the first mismatch. diff - displays the changes to be made to make the files identical"},
+				{"category":"Unix","topic_id":"20","question":"What data structure is used to maintain file identification?","answer":"'inode', each file has a separate inode and a unique inode number.The inode contains info about the file-size, its location, time of last access, time of last modification, permission etc."},
+				{"category":"Unix","topic_id":"20","question":"How to terminate a process which is running?","answer":"kill -9 pid; where pid is the process id"},
+				{"category":"Unix","topic_id":"20","question":"How to get the nth word of a line?","answer":"cut -f4 -d' ' . '-d' switch tells 'cut' about what is the delimiter (or separator) in the file, which is space ' '"},
+				{"category":"Unix","topic_id":"20","question":"How to reverse a string?","answer":"rev. echo 'string' | rev"},
+				{"category":"Unix","topic_id":"20","question":"How to check if the last command was successful?","answer":"echo $? ; 0=Success, Non zero= Failure"},
+				{"category":"Unix","topic_id":"20","question":"How to check all the running processes?","answer":" ps -aef or ps -auxwww"},
+				{"category":"Unix","topic_id":"20","question":"How to get the CPU and Memory details in Linux server?","answer":"cat /proc/meminfo  and cat /proc/cpuinfo"},
+				{"category":"Unix","topic_id":"20","question":"What is a zombie process?","answer":"A zombie is a process which has finished execution but is still maintained in the process table. Eg: A forked child process which finishes before its parent, is still maintained in the proc table."},
+				{"category":"Unix","topic_id":"20","question":"How to create null file or empty a live log file?","answer":"cat /dev/null > filename1"},
+				{"category":"Unix","topic_id":"20","question":"Display the # of active established connections?","answer":"netstat -a "},
+				{"category":"Unix","topic_id":"20","question":"Display the parent/child tree of a process ?","answer":"ptree pid "},
+				{"category":"Unix","topic_id":"20","question":"What is an alternative for 'top' command ?","answer":"prstat -a"},
+				{"category":"Unix","topic_id":"20","question":"How to find the route of packets sent to a host?","answer":"traceroute <target host> , prints the information of all hops it takes en route to the target"},
+				{"category":"Unix","topic_id":"20","question":"How to print the nth line in a file","answer":"head -n file | tail -1"}
+	]
+}

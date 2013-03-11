@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:title="@string/refreshItem" android:id="@+id/itemRefresh"
+		android:icon="@drawable/ic_menu_refresh" />
+	<item android:title="@string/postItem" android:id="@+id/itemPost"
+		android:icon="@android:drawable/ic_menu_upload" />
+	<item android:id="@+id/itemContact" android:title="@string/contactItem"
+		android:icon="@android:drawable/ic_dialog_email" />
+	<item android:id="@+id/itemShare" android:title="@string/shareItem"
+		android:icon="@android:drawable/ic_menu_share" />
+</menu>

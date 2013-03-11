@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Yamba</string>
+    <string name="titleStatus">Status update</string>
+    <string name="hintText">Please enter your 140 character status</string>
+    <string name="buttonUpdate">Update</string>
+    <string name="titleUsername">Username</string>
+    <string name="summaryUsername">Please enter your username</string>
+    <string name="titlePassword">Password</string>
+    <string name="summaryPassword">Please enter your password</string>
+    <string name="titlePrefs">Preferences</string>
+    <string name="summaryApiRoot">URL of Root API for your service</string>
+    <string name="titleServiceStart">Start Svc</string>
+    <string name="titleServiceStop">Stop</string>
+    <string name="timelineTitle">Timeline</string>
+    <string name="msgSetupPrefs">Please set your user credentials</string>
+    <string name="titlePurge">Purge</string>
+    <string name="msgAllDataPurged">All data has been purged</string>
+    <string name="sendTimelineNotfPermLabel">Timeline Notification Permission</string>
+    <string name="sendTimelineNotfPermDesc">Timeline Notification Permission</string>
+    <string name="recTimelineNotfPermLabel">Receive Timeline Notification Permission</string>
+    <string name="recTimelineNotfPermDesc">Receive Timeline Notification Permission</string>
+    
+</resources>
