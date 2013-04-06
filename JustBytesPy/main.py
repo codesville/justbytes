@@ -12,14 +12,17 @@ class MainPage(webapp.RequestHandler):
     def get(self):
         #self.response.headers['Content-Type'] = 'text/html'
         path=os.path.join(os.path.dirname(__file__),'view','index.html')
-        #models.insertBe()
-        rs = models.getAllBusinessEntities()
         
-        self.response.out.write(template.render(path, {"title":"Just Bytes","beList":rs}))
+        models.insertBe()
+        
+        
+        self.response.out.write(template.render(path, {"title":"Just Bytes"}))
 
 
 application = webapp.WSGIApplication([('/', MainPage),
-                                      ('/icons', contenthandler.ImageHandler)], debug=True)
+                                      ('/icons', contenthandler.ImageHandler),
+                                      ('/dining', contenthandler.DiningHandler),
+                                      ('/diningdetails', contenthandler.DiningDetailsHandler)], debug=True)
 
 
 def main():

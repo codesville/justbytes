@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title> title </title>
+
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.css"/>
+
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.js"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+<script type="text/javascript" src="../asset/scripts/jquery.ui.map.min.js"></script>
+
+</head>
+
+<body>
+
+<!-- Dining details -->
+
+<div data-role="page" id="diningdetails">
+<div data-role="header" data-theme="b">
+<a href="./" data-icon="home" data-iconpos="notext" data-transition="fade">Home</a>
+<h1>Just Bytes</h1>
+</div>
+
+<div data-role="content">
+
+<div class="ui-grid-a" id="row1grid" >
+
+<div class="ui-block-a">
+<img src="/icons?businessName={{ be.name }}" width="50%" height="50%"/>
+</div>
+
+<div class="ui-block-b">
+<h2> {{ be.name }} </h2>
+<p> {{ be.address }} 
+</div>
+
+</div>
+
+<hr/>
+
+<div class="ui-grid-a" id="row2grid" >
+
+<div class="ui-block-solo">
+<h3> Details</h3>
+{% if be.description1 %}
+	{{ be.description1 }}
+{% endif %}
+</div>
+
+</div>
+
+<hr/>
+
+<h3> Contact </h3>
+
+<div class="ui-grid-a" id="row3grid" >
+
+<div class="ui-block-a">
+{% if be.phoneNumber %}
+<a href="tel:{{ be.phoneNumber }}" data-role="button" data-icon="tel" data-theme="b">Call </a>
+{% endif %}
+</div>
+
+<div class="ui-block-b">
+{% if be.email %}
+<a href="mailto:{{ be.email }}" data-role="button" data-icon="mail" data-theme="b">Email </a>
+{% endif %}
+</div>
+
+</div>
+
+
+{% if be.phoneNumber %}
+Fax: {{ be.phoneNumber }}
+{% endif %}
+
+<br/>
+
+{% if be.www %}
+<a href="{{ be.www }}"> Website </a>
+{% endif %}
+
+<hr/>
+
+<div class="ui-grid-a" id="row4grid" >
+
+<div class="ui-block-solo">
+<h3> Location </h3>
+{% if be.geoLocation %}
+<div id="map_canvas" style="width:100px;height:100px" />
+	{% endif %}
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+</div>
+
+<div data-role="footer">
+{{ year }} &copy; {{ title }}.
+</div>
+</div>
+</body>
+<script>
+$('#map_canvas').gmap().bind('init', function(ev, map) {
+	$('#map_canvas').gmap('addMarker', {'position': '57.7973333,12.0502107', 'bounds': true}).click(function() {
+		$('#map_canvas').gmap('openInfoWindow', {'content': 'Hello World!'}, this);
+	});
+});
+</script>
+</html>

@@ -23,18 +23,19 @@ def insertBe():
     testBe = BusinessEntity(businessId=1, name='Jaipur Indian Restaurant', type=1, address='5909 South BLVD, Charlotte, NC 28217', 
                             geoLocation=db.GeoPt(35.15493, -80.87506), phoneNumber=db.PhoneNumber("1 (704)-724-5555"),
                             email=db.Email("info@jaipur-indian.com"),www=db.Link("http://www.jaipur-indian.com"),activeIn=True)
-    path=os.path.join(os.path.dirname(__file__),'../asset','images','1.jpg')
-    #path='/images/1.jpg'
+    # to read local file, it shld not be mapped as static in app.yaml..so using icons
+    path=os.path.join(os.path.dirname(__file__),'../asset','icons','jaipurindianclt.jpg')
     testBe.picture = db.Blob(open(path).read());
     db.put(testBe)
     
-def getBusinessImage(businessId):
-    rs = db.GqlQuery("SELECT * FROM BusinessEntity WHERE name = :1", businessId).fetch(1)
+def getBusinessEntity(name):
+    rs = db.GqlQuery("SELECT * FROM BusinessEntity WHERE name = :1", name).fetch(1)
     return rs[0]
     
 def getAllBusinessEntities():
     rs = BusinessEntity.gql("where activeIn = True ")
     return rs
+
     
  
     
