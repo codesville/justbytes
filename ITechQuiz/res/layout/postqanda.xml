@@ -1,36 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/starburst"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/background_light"
     android:orientation="vertical" >
 
     <ScrollView
         android:id="@+id/postScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/postQandaAdLayout" >
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/postQandaAdLayout"
+        android:layout_alignParentTop="true" >
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
 
             <TextView
                 android:id="@+id/postTextView"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_marginBottom="20dp"
                 android:background="@layout/button_shape"
                 android:gravity="center"
                 android:padding="2dp"
-                android:text="Share your own interview question/answer with the community!"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/black" />
+                android:text="@string/app_name"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:typeface="normal" />
 
             <EditText
                 android:id="@+id/postUsernameText"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/postTextView"
                 android:layout_marginBottom="20dp"
@@ -55,12 +58,11 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginLeft="50dp"
                 android:layout_toRightOf="@+id/categorySpinner"
-                android:prompt="@string/postTopicLabelTxt"
-                android:spinnerMode="dropdown" />
+                android:prompt="@string/postTopicLabelTxt" />
 
             <EditText
                 android:id="@+id/postQuestionText"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/categorySpinner"
                 android:layout_marginBottom="20dp"
@@ -71,7 +73,7 @@
 
             <EditText
                 android:id="@+id/postAnswerText"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/postQuestionText"
                 android:layout_marginBottom="20dp"
@@ -98,6 +100,7 @@
         android:id="@+id/postQandaAdLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal" />
 
 </RelativeLayout>

@@ -3,160 +3,57 @@
     android:id="@+id/mainLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/starburst"
+    android:background="@android:color/background_light"
     android:orientation="vertical" >
 
-    <ScrollView
-        android:id="@+id/mainScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/mainAdLayout" >
-
-        <TableLayout
-            android:id="@+id/mainTableLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <TableRow
-                android:id="@+id/tableRow4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@layout/button_shape"
-                android:gravity="center" >
-
-                <TextView
-                    android:id="@+id/textView1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginRight="25dp"
-                    android:text="@string/app_name"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@android:color/black"
-                    android:textStyle="bold"
-                    android:typeface="normal" />
-
-                <ImageButton
-                    android:id="@+id/postQandAButton"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="@drawable/postq"
-                    android:clickable="true" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="50dp"
-                android:paddingRight="50dp"
-                android:paddingTop="75dp" >
-
-                <LinearLayout
-                    android:id="@+id/linearLayout1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-
-                    <ImageButton
-                        android:id="@+id/javaImgButton"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginRight="100dp"
-                        android:background="@drawable/javalogo"
-                        android:clickable="true" />
-
-                    <ImageButton
-                        android:id="@+id/netImgButton"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@drawable/dotnetlogo"
-                        android:clickable="true" />
-                </LinearLayout>
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="50dp"
-                android:paddingRight="50dp"
-                android:paddingTop="75dp" >
-
-                <LinearLayout
-                    android:id="@+id/linearLayout2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-
-                    <ImageButton
-                        android:id="@+id/sqlImgButton"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginRight="100dp"
-                        android:background="@drawable/sqllogo"
-                        android:clickable="true" />
-
-                    <ImageButton
-                        android:id="@+id/unixImgButton"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@drawable/unixlogo"
-                        android:clickable="true" />
-                </LinearLayout>
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="50dp"
-                android:paddingRight="50dp"
-                android:paddingTop="75dp" >
-
-                <LinearLayout
-                    android:id="@+id/linearLayout3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-
-                    <ImageButton
-                        android:id="@+id/hiberImgButton"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginRight="100dp"
-                        android:background="@drawable/hibernate"
-                        android:clickable="true" />
-
-                    <ImageButton
-                        android:id="@+id/springImgButton"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@drawable/spring"
-                        android:clickable="true" />
-                </LinearLayout>
-            </TableRow>
-        </TableLayout>
-    </ScrollView>
-    <!--
     <LinearLayout
-        android:id="@+id/spinnerLayout"
-        android:layout_width="wrap_content"
+        android:id="@+id/mainTopRowLayout"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true" >
+        android:layout_alignParentTop="true"
+        android:background="@layout/button_shape"
+        android:gravity="center"
+        android:orientation="horizontal" >
 
-        <ProgressBar
-            android:id="@+id/mainProgressBar"
+        <TextView
+            android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:indeterminate="true"
-            android:indeterminateOnly="true" />
-    </LinearLayout>
-    -->
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="35dp"
+            android:text="@string/app_name"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:typeface="normal" />
+
+        <ImageButton
+            android:id="@+id/postQandAButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/postq"
+            android:clickable="true" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/mainListView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/mainAdLayout"
+        android:layout_below="@+id/mainTopRowLayout"
+        android:clickable="true"
+        android:divider="@android:color/background_light"
+        android:dividerHeight="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="20dp" />
 
     <LinearLayout
         android:id="@+id/mainAdLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal" />
 
 </RelativeLayout>

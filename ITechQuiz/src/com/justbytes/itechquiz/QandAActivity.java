@@ -17,7 +17,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SimpleCursorTreeAdapter;
 import android.widget.Toast;
@@ -38,6 +40,8 @@ public class QandAActivity extends ExpandableListActivity {
 
 	private DbAdapter dbAdapter;
 	AdView adView;
+
+	ImageButton postQandAButton;
 
 	@Override
 	protected void onCreate(Bundle bundle) {
@@ -74,6 +78,18 @@ public class QandAActivity extends ExpandableListActivity {
 				new int[] { R.id.answertext });
 		cursorTreeAdapter.setViewBinder(VIEW_BINDER);
 		setListAdapter(cursorTreeAdapter);
+
+		postQandAButton = (ImageButton) findViewById(R.id.qandaPostQandAButton);
+		postQandAButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(QandAActivity.this,
+						PostQandAActivity.class);
+				startActivity(intent);
+
+			}
+		});
 		// getExpandableListView();
 	}
 

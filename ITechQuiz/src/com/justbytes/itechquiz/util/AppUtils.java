@@ -33,7 +33,8 @@ public class AppUtils {
 			"jobs", "Spring", "Oracle", "Microsoft", "Silverlight", ".NET",
 			"Android", "Google", "Oasis", "Tennis", "Guitar" };
 
-	public static final String AD_ID = "a14f4c6b1e03bee";
+	public static final String AD_ID = "a1519648ebada10";       //mr.
+								     //"a14f4c6b1e03bee";      //codes
 	public static final String PLAIN_TEXT = "plain/text";
 
 	public static AdRequest getAdRequest() {

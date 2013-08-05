@@ -5,14 +5,17 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
 
+import com.justbytes.itechquiz.R.color;
 import com.justbytes.itechquiz.data.DbAdapter;
 
 public class TopicsActivity extends BaseActivity {
@@ -26,6 +29,8 @@ public class TopicsActivity extends BaseActivity {
 
 	private String[] FROM = { DbAdapter.C_TOPIC_TITLE };
 	private int[] TO = { R.id.topicRowText };
+
+	ImageButton postQandAButton;
 
 	@Override
 	public void onCreate(Bundle bundle) {
@@ -57,6 +62,18 @@ public class TopicsActivity extends BaseActivity {
 						.findViewById(R.id.topicRowText)).getText().toString());
 				qandaIntent.putExtras(bundle);
 				startActivity(qandaIntent);
+			}
+		});
+		
+		postQandAButton = (ImageButton) findViewById(R.id.topicsPostQandAButton);
+		postQandAButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(TopicsActivity.this,
+						PostQandAActivity.class);
+				startActivity(intent);
+
 			}
 		});
 
@@ -96,7 +113,11 @@ public class TopicsActivity extends BaseActivity {
 
 		@Override
 		public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-			// Log.d(TAG, cursor.getString(columnIndex));
+//			ROW_COUNT++;
+//			if (ROW_COUNT % 2 == 0)
+//				view.setBackgroundColor(color.bgColorGrey);
+//			if (ROW_COUNT >= cursor.getCount())
+//				ROW_COUNT = 0;
 			return false;
 		}
 	};

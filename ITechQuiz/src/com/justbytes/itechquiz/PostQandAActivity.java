@@ -47,7 +47,7 @@ public class PostQandAActivity extends Activity implements OnClickListener,
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.postqanda);
-		setTitle("Post your question and answer");
+		setTitle("Share your question and answer with everyone");
 
 		LinearLayout layout = (LinearLayout) findViewById(R.id.postQandaAdLayout);
 		adView = new AdView(this, AdSize.BANNER, AppUtils.AD_ID);
@@ -101,6 +101,7 @@ public class PostQandAActivity extends Activity implements OnClickListener,
 		protected void onPreExecute() {
 			progDiag = ProgressDialog.show(PostQandAActivity.this,
 					"Submitting QandA", "Please wait...", true, true);
+			submitButton.setEnabled(false);
 		}
 
 		@Override
@@ -138,6 +139,7 @@ public class PostQandAActivity extends Activity implements OnClickListener,
 
 				startActivity(intent);
 			}
+			submitButton.setEnabled(true);
 
 		}
 

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string-array name="categories">
-        <item >Java</item>
-        <item >.NET</item>
-        <item >Unix</item>
-        <item >Sql</item>
-        <item >Hibernate</item>
-        <item >Spring</item>
+        <item>Java</item>
+        <item>.NET</item>
+        <item>Unix</item>
+        <item>Sql</item>
+        <item>Hibernate</item>
+        <item>Spring</item>
     </string-array>
-    
+
 </resources>

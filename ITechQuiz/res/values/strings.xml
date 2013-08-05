@@ -4,9 +4,10 @@
     <string name="app_name">ITechQuiz</string>
 
     <color name="bgColorCyan">#AEC5CF</color>
-    <color name="bgColorGrey">#778899</color>
+    <color name="bgColorGrey">#DCDEE0</color>
     <color name="bgColorSkyBlue">#1874CD</color>
-
+	<color name="bgColorCream">#FFFFFF</color>
+    
     <string name="refreshItem">Fetch more questions</string>
     <string name="postItem">Post your question/answer</string>
     <string name="contactItem">Contact Us</string>
