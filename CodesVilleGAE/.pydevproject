@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?eclipse-pydev version="1.0"?>
-
-<pydev_project>
+<?eclipse-pydev version="1.0"?><pydev_project>
 <pydev_variables_property name="org.python.pydev.PROJECT_VARIABLE_SUBSTITUTION">
 <key>GOOGLE_APP_ENGINE</key>
-<value>C:\Program Files\Google\google_appengine</value>
+<value>D:\work\lib\google_appengine</value>
 </pydev_variables_property>
 <pydev_pathproperty name="org.python.pydev.PROJECT_SOURCE_PATH">
 <path>/CodesVilleGAE</path>
@@ -12,12 +10,11 @@
 </pydev_pathproperty>
 <pydev_pathproperty name="org.python.pydev.PROJECT_EXTERNAL_SOURCE_PATH">
 <path>${GOOGLE_APP_ENGINE}</path>
-<path>${GOOGLE_APP_ENGINE}/lib/webob</path>
 <path>${GOOGLE_APP_ENGINE}/lib/yaml/lib</path>
-<path>C:\work\opt\bottle-0.10.9\bottle.py</path>
-<path>C:\work\opt\bottle-0.10.9</path>
-<path>C:\downloads\simplejson-2.0.9-py2.5-win32.egg</path>
+<path>D:\work\lib\bottle-0.11.6</path>
+<path>D:\work\lib\google_appengine\lib\webapp2-2.5.2</path>
+<path>D:\work\lib\google_appengine\lib\webob-1.1.1</path>
 </pydev_pathproperty>
-<pydev_property name="org.python.pydev.PYTHON_PROJECT_VERSION">python 2.5</pydev_property>
-<pydev_property name="org.python.pydev.PYTHON_PROJECT_INTERPRETER">Default</pydev_property>
+<pydev_property name="org.python.pydev.PYTHON_PROJECT_VERSION">python 2.7</pydev_property>
+<pydev_property name="org.python.pydev.PYTHON_PROJECT_INTERPRETER">D:\work\lib\python275\python.exe</pydev_property>
 </pydev_project>

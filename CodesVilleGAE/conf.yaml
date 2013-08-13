@@ -1,7 +1,3 @@
 qanda.maxversion: 1
+gcm.send.url: https://android.googleapis.com/gcm/send
 
-c2dm.login.url: https://www.google.com/accounts/ClientLogin
-c2dm.email: esandbee@gmail.com
-c2dm.pass: blah1
-c2dm.source: itechquiz
-c2dm.send.url: https://android.apis.google.com/c2dm/send

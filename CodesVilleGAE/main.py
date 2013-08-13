@@ -1,17 +1,19 @@
 '''
 Created on Mar 5, 2012
 
-@author: nbkgl14
+@author: codesville
+$Id$
 '''
 from framework import bottle
 from framework.bottle import route, template, request, error, debug
 from google.appengine.api.datastore import Query
 from google.appengine.ext import db
-from google.appengine.ext.webapp.util import run_wsgi_app
+from google.appengine.api import mail
+# from google.appengine.ext.webapp.util import run_wsgi_app
 from yaml import load
 import c2dm
 import datetime
-import simplejson
+import json
 import logging
 
  
@@ -32,7 +34,7 @@ def GetLatestQandA():
     outputDict['QandAList'] = []
     
     if userVer < latestVer:
-        #Merge all update files into one JSON output in case user is way behind in updates
+        # Merge all update files into one JSON output in case user is way behind in updates
         for i in range(userVer + 1, latestVer + 1):
             fh = None
             try:
@@ -40,7 +42,7 @@ def GetLatestQandA():
                 fh = open('upload/updates_' + str(i) + '.json', 'r')
                 if fh:
                     # load json file
-                    jsonFile = simplejson.load(fh)
+                    jsonFile = json.load(fh)
                     # extend list to add jsonFile rows
                     outputDict['QandAList'].extend(jsonFile['QandAList']) 
                 
@@ -62,71 +64,119 @@ def PostQandA():
     question = request.POST.get('question', '').strip()
     answer = request.POST.get('answer', '').strip()
     topicId = int(request.POST.get('topicId', '').strip())
-    postedTime = datetime.datetime.now() #Needs fixing to EST
+    postedTime = datetime.datetime.now()  # Needs fixing to EST
     
     try:
+        # save in Unapproved state and send email.Upon verifying contents of the post,
+        # I mark it Approved and send out GCM notification
         newVer = GetMaxVer() + 1
-        
         # create datastore entity
-        qanda = QandA(username=userName, topic_id=topicId, question=question, answer=answer, posted_time=postedTime, version=newVer)
+        qanda = QandA(username=userName, topic_id=topicId, question=question, answer=answer, posted_time=postedTime, version=newVer, approval_status='U')
         # save it in datastore
-        db.put(qanda)
-        
-        # notify C2DM servers
-        
-        clientAuth = c2dm.C2DMClientAuth()
-        token = clientAuth.getToken()
-        sender = c2dm.C2DM()
-        sender.clientAuth = token
-        sender.collapseKey = 1
-        
-        query = db.GqlQuery('select * from Topics where topic_id = :1', topicId)
-        row = query.fetch(1)
-        msg = 'New ' + row[0].category
-        if row[0].title != 'All':
-            msg += '(' + row[0].title + ')' 
-        msg += ' question has been posted.' 
-        #logging.info('Sending new QandA push notification...' + msg)
-        
-        sender.data = {'message':msg}
-        
-        # send notification to each user
-        for user in sender.getUsers():
-            #logging.info('..to ' + user.registration_id)
-            sender.registrationId = user.registration_id
-            response = sender.sendMessage()
-            #logging.info(response)
+        key = db.put(qanda)
+        approvalUrl = 'http://codesville.appspot.com/ITechQuiz/broadcastQandA?key=%s' % key
+        logging.info('Saved QandA posted by %s in Unapproved state' % userName)
+        logging.info(approvalUrl)
+        mail.send_mail(sender='codesville@gmail.com', to='codesville@gmail.com', subject='New question has been posted',
+                       body='UserName: %s\n TopicId: %s\n Question: %s\n Answer: %s \n PostedTime: %s\n Approval Url(FLIP FLAG TO A): %s' % (userName, topicId, question, answer, postedTime, approvalUrl))
+        logging.info('Sending email to admin notifying new QandA')
         
     except Exception, e:
         logging.error('Failed to save QandA: %s' % str(e))
     finally:
         pass
-        #sys.stderr.flush()
+        # sys.stderr.flush()
+
+@route('/ITechQuiz/broadcastQandA', method='GET')          
+def broadcastQandA():
+    key = request.GET.get('key', '').strip()
+    
+    try:
+        postedQandA = db.get(key)
+        if postedQandA.approval_status != 'A':
+            logging.info('Question %s is in unapproved state.Cannot broadcast' % key)
+            mail.send_mail(sender='codesville@gmail.com', to='codesville@gmail.com', subject='Question has not been approved',
+                       body='Question %s is in unapproved state.Cannot broadcast' % key)
+            return
+        else:
+            topicId = int(postedQandA.topic_id)
+            # notify GCM servers
+            
+            sender = c2dm.C2DM()
+            sender.collapseKey = "msg"
+             
+            query = db.GqlQuery('select * from Topics where topic_id = :1', topicId)
+            row = query.fetch(1)
+            msg = 'New ' + row[0].category
+            if row[0].title != 'All':
+                msg += '(' + row[0].title + ')' 
+            msg += ' question has been posted.' 
+             
+            sender.data = {'message':msg}
+             
+            # send notification to all active users and if GCM
+            for user in sender.getUsers():
+                if user.gcm_c2dm == 'GCM' and user.is_active == 'Y':
+                    sender.registrationIds.append(user.registration_id)
+            
+            response = sender.sendMessage()
+            logging.info('Response from GCM server = %s' % response)
+            logging.info('Finished push notification with msg %s to %d GCM users' % (msg,len(sender.registrationIds)))
+    except Exception, e:
+        logging.error('Failed to save QandA: %s' % str(e))
+    finally:
+        pass
+
+@route('/ITechQuiz/broadcastMsg', method='POST')       
+def BroadcastMsg():
+    try:
+        msg = request.POST.get('msg', 'New questions have been posted.Please refresh.').strip()
+        # notify C2DM servers
+        sender = c2dm.C2DM()
+        sender.collapseKey = "msg"
+        sender.data = {'message':msg}
+        # send notification to all active users and if GCM
+        for user in sender.getUsers():
+            if user.is_active and user.gcm_c2dm == 'GCM':
+                sender.registrationIds.append(user.registration_id)
+        response = sender.sendMessage()
+        logging.info('Response from GCM server = %s' % response)
+        logging.info('Finished push notification with msg %s to %d GCM users' % (msg,len(sender.registrationIds)))
+
+    except Exception, e:
+        logging.error('Failed to broadcast msg: %s' % str(e))
+    else:
+        pass
+
+ 
 
 @route('/ITechQuiz/register', method='POST')
 def Register():
-    deviceId = request.POST.get('deviceId', '').strip()
-    #emailId = request.POST.get('emailId', '').strip()
-    emailId = 'test'
-    registrationId = request.POST.get('regId', '').strip()
-    logging.info('Received request to register device owner %s' % registrationId)
-    userInfo = c2dm.UserInfo(device_id=deviceId, email_id=emailId, registration_id=registrationId)
-    # TODO: if regId changes, then need to update the regId and not insert new
-    query = db.GqlQuery('select * from UserInfo where device_id= :1', deviceId)
-    row = query.fetch(1)
-    if row:
-        logging.info('Found existing deviceId %s' % row[0])
-        logging.info('Updating registrationdId of device %s to %s' % (deviceId, registrationId))
-        row[0].registration_id = registrationId
-        db.put(row[0])
-    else:
-        db.put(userInfo)
+    try:
+        deviceId = request.POST.get('deviceId', '').strip()
+        emailId = request.POST.get('emailId', '').strip()
+        registrationId = request.POST.get('regId', '').strip()
+        logging.info('Received request to register device owner %s' % registrationId)
+        
+        userInfo = c2dm.UserInfo(device_id=deviceId, email_id=emailId, registration_id=registrationId, gcm_c2dm = 'GCM', is_active= True)
+        query = db.GqlQuery('select * from UserInfo where device_id= :1', deviceId)
+        row = query.fetch(1)
+        if row:
+            logging.info('Found existing deviceId %s' % row[0])
+            logging.info('Updating registrationdId of device %s to %s' % (deviceId, registrationId))
+            row[0].registration_id = registrationId
+            db.put(row[0])
+        else:
+            db.put(userInfo)
+    except Exception, e:
+        logging.error('Failed to register device: %s' % str(e))
 
 def GetLatestQandAFromDS(curVer):
     jsonList = []
     try:
         query = db.Query(QandA)
         query.filter('version > ', curVer)
+        query.filter('approval_status = ', 'A')
         result = query.fetch(10000)
         
         for qanda in result:
@@ -144,7 +194,7 @@ def GetLatestQandAFromDS(curVer):
     qandaDict = {}
     if jsonList:
         qandaDict['QandAList'] = jsonList
-    #logging.info(qandaDict)
+    # logging.info(qandaDict)
     return qandaDict
 
 # Defaults to 1. Fetch max version of QandA from DS(for user uploads).
@@ -153,7 +203,7 @@ def GetMaxVer():
     # default to 1
     maxVer = 1
     dsVer = 1
-    #Read maxVer from conf.yaml
+    # Read maxVer from conf.yaml
     fh = open('conf.yaml')
     try:
         confYaml = load(fh)
@@ -164,7 +214,7 @@ def GetMaxVer():
         fh.close();
     # Read max(version) from DS
     query = db.Query(QandA)
-    query.order('-version') #desc
+    query.order('-version')  # descending
     row = query.fetch(1)
     
     if row:
@@ -182,6 +232,7 @@ class QandA(db.Model):
     answer = db.StringProperty(required=True)
     topic_id = db.IntegerProperty(required=True)
     posted_time = db.DateTimeProperty()
+    approval_status = db.StringProperty(required=False)  # U-Unapproved, A-Approved
     
 
 class Topics(db.Model):
@@ -189,8 +240,12 @@ class Topics(db.Model):
     version = db.IntegerProperty(required=True)
     title = db.StringProperty(required=True)
     category = db.StringProperty(required=True)
-    
+
+@route('/ITechQuiz/loadTopics', method='GET')    
 def loadTopics():
+    logging.info("LoadTopics called...")
+    db.delete(Topics.all())
+    
     topArray = []
     topArray.append(Topics(topic_id=1, version=1, title='Fundamentals', category='Java'))
     topArray.append(Topics(topic_id=2, version=1, title='Classes/Objects', category='Java'))
@@ -222,12 +277,15 @@ def loadTopics():
      
 def main():
     debug(True)
-    run_wsgi_app(bottle.default_app())
-    loadTopics()
+    # run_wsgi_app(bottle.default_app())
+    # loadTopics()
+
+bottle.run(server='gae', degug=False)
+app = bottle.app()
+   
     
-    
-#def uploadFile():
-    #blobstore.create_upload_url('/upload/')
+# def uploadFile():
+    # blobstore.create_upload_url('/upload/')
  
 @error(403)
 def Error403(code):
