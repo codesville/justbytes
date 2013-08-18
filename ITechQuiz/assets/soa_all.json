@@ -1,0 +1,136 @@
+{
+    "QandAList": [
+        {
+            "category": "SOA",
+            "topic_id": "26",
+            "question": "What is a web service?",
+            "answer": "A Web service is a method of communication between two electronic devices over the Web"
+        },
+        {
+            "category": "SOA",
+            "topic_id": "26",
+            "question": "What are the different styles of Web Services?",
+            "answer": "SOAP and RESTful webservices"
+        },
+        {
+            "category": "SOA",
+            "topic_id": "26",
+            "question": "What is the difference between SOA and a Web service? ",
+            "answer": "SOA is a software design principle and an architectural pattern for implementing loosely coupled, reusable and coarse grained services. You can implement SOA using any protocols such as HTTP, HTTPS, JMS, SMTP, RMI, IIOP (i.e. EJB uses IIOP), RPC etc. Messages can be in XML or Data Transfer Objects (DTOs). Whereas web service is an implementation technology and one of the ways to implement SOA. You can build SOA based applications without using Web services like Java RMI, EJB, JMS based messaging, etc. But what Web services offer is the standards based  and platform-independent service via HTTP, XML, SOAP, WSDL and UDDI, thus allowing interoperability between heterogeneous technologies such as J2EE and .NET."
+        },
+        {
+            "category": "SOA",
+            "topic_id": "26",
+            "question": "What is UDDI?",
+            "answer": "UDDI stands for Universal, Description, Discovery, and Integration. It is the discovery layer in the web services protocol stack."
+        },
+        {
+            "category": "SOA",
+            "topic_id": "26",
+            "question": "What is SOAP?",
+            "answer": "SOAP is an XML-based protocol for exchanging information between computers. The main focus of SOAP is Remote Procedure Calls (RPC) transported via HTTP. Like XML-RPC, SOAP is platform independent, and therefore enables diverse applications to communicate with one another."
+        },
+        {
+            "category": "SOA",
+            "topic_id": "26",
+            "question": "What is REST?",
+            "answer": "REST(Representational state transfer) is an architectural style which is based on web-standards and the HTTP protocol.In a REST based architecture everything is a resource. A resource is accessed via a common interface based on the HTTP standard methods."
+        },
+        {
+            "category": "SOA",
+            "topic_id": "26",
+            "question": "What are the differences between SOAP WS and RESTful WS?",
+            "answer": "SOAP WS supports both remote procedure call (RPC) and message oriented middle-ware (MOM) integration styles. Restful Web Service supports only RPC integration style. 2) SOAP WS is transport protocol neutral. Supports multiple protocols like HTTP(S),  Messaging, TCP, UDP SMTP, etc. REST is transport protocol specific. Supports only HTTP or HTTPS protocols. 3) SOAP WS permits only XML data format which is tunnelled over HTTP POST. The focus is on accessing the named operations and exposing the application logic as a service. REST permits multiple data formats like XML, JSON data, text, HTML, etc. Any browser can be used because the REST approach uses the standard GET, PUT, POST, and DELETE Web operations. 4) SOAP uses soap envelope, but REST is just XML. 5) REST is stateless. REST services are easily cacheable."
+        },
+        {
+            "category": "SOA",
+            "topic_id": "26",
+            "question": "Which style of Web Service is preferred? SOAP WS or REST?",
+            "answer": "In general, a REST based Web service is preferred due to its simplicity, performance, scalability, and support for multiple data formats. SOAP is favored where service requires comprehensive support for security and transaction reliability."
+        },
+        {
+            "category": "SOA",
+            "topic_id": "26",
+            "question": "What tools can be used to test Web Services?",
+            "answer": "SoapUI tool for SOAP WS and the Firefox 'poster' plugin for RESTFul services."
+        },
+        {
+            "category": "SOA",
+            "topic_id": "26",
+            "question": "What are the different approaches to developing a SOAP based Web service?",
+            "answer": "1) The contract-first approach, where you define the contract first with XSD and WSDL and the generate the Java classes from the contract. 2)The contract-last approach where you  define the Java classes first and then generate the contract, which is the  WSDL file from the Java classes."
+        },
+        {
+            "category": "SOA",
+            "topic_id": "26",
+            "question": "What are the various implementations of JAX-RS available to choose from in Java?",
+            "answer": "When you're developing with REST in Java, you have a lot of options to choose from in terms of the frameworks. There's Jersey, the reference implementation from Oracle, then you have RestEasy, the JBoss choice, and there is CXF, the Apache choice."
+        },
+        {
+            "category": "SOA",
+            "topic_id": "26",
+            "question": "What are some of the important JAX-RS annotations?",
+            "answer": "@PATH(your_path): Sets the path to base URL + /your_path. The base URL is based on your application name, the servlet and the URL pattern from the web.xml configuration file. @POST/@GET/@PUT/@DELETE: Indicates that the following method will answer to a HTTP POST/GET/PUT/DELETE request. @Produces(MediaType.TEXT_PLAIN [, more-types ]): @Produces defines which MIME type is delivered by a method annotated with @GET. In the example text ('text/plain') is produced. Other examples would be 'application/xml' or 'application/json'.@Consumes(type [, more-types ]): @Consumes defines which MIME type is consumed by this method. @PathParam: Used to inject values from the URL into a method parameter. This way you inject for example the ID of a resource into the method to get the correct object."
+        },
+        {
+            "category": "SOA",
+            "topic_id": "26",
+            "question": "How is the conversion of POJO to XML handled in JAX-RS?",
+            "answer": "JAX-RS supports the automatic creation of XML and JSON via JAXB."
+        },
+        {
+            "category": "SOA",
+            "topic_id": "26",
+            "question": "What is marshalling/unmarshalling?",
+            "answer": "Marshalling: Converting a Java object into a XML file.Unmarshalling: Converting XML content into a Java Object. JAXB is the API used to perform the same."
+        },
+        {
+            "category": "SOA",
+            "topic_id": "26",
+            "question": "What is Jackson used for?",
+            "answer": "Jersey uses Jackson to convert object to/from JSON."
+        },
+        {
+            "category": "SOA",
+            "topic_id": "26",
+            "question": "What mediatype is used to upload files to a REST webservice in Jersey?",
+            "answer": "MediaType.MULTIPART_FORM_DATA"
+        },
+        {
+            "category": "SOA",
+            "topic_id": "26",
+            "question": "What is WSDL?",
+            "answer": "WSDL(Web Services Description Language) is an XML-based language for describing Web services and how to access them.It specifies the location of the service and the operations (or methods) the service exposes."
+        },
+        {
+            "category": "SOA",
+            "topic_id": "26",
+            "question": "What is WADL?",
+            "answer": "WADL (Web Application Description Language) is to REST what WSDL is to SOAP.Using WADL implies that you just might be gracious enough to actually define the data / documents you are passing back and forth. Say you are passing some XML fragments, they might actually be part of a defined schema."
+        },
+        {
+            "category": "SOA",
+            "topic_id": "26",
+            "question": "How to access the WSDL file from a webservice endpoint?",
+            "answer": "Append '?wsdl' to the endpoint URL. Eg. http://localhost:8080/blah/blah/getblah?wsdl"
+        },
+        {
+            "category": "SOA",
+            "topic_id": "26",
+            "question": "How to access the WADL file from a webservice endpoint?",
+            "answer": "Append '?_wadl' to the endpoint URL. Eg. http://localhost:8080/blah/blah/getblah?_wadl"
+        },
+        {
+            "category": "SOA",
+            "topic_id": "26",
+            "question": "What is difference between top-down and bottom-up approach of developing web services?",
+            "answer": "In top-down approach first WSDL document is created and than Java classes are developed based on WSDL contract whereas in case of bottom up approach of web service development you first create Java code and then use annotations like @WebService to specify contract or interface and WSDL field will be automatically generated from your build."
+        },
+        {
+            "category": "SOA",
+            "topic_id": "26",
+            "question": "How is authentication handled in REST?",
+            "answer": "1)Using HTTP AUTH. User will be prompted for the credential just once (or they will be loaded from file, depending on the system at hand). The client software will compute the Base64 encoding of the credentials and will include them in each future HTTP request to the server (using the 'Authorization' HTTP header). 2) Create a dedicated login service, that accepts credentials and returns a token. This token should then be included, as a URL argument, to each following request."
+        }
+    ]
+}

@@ -1,0 +1,106 @@
+{
+    "QandAList": [
+        {
+            "category": "XML",
+            "topic_id": "27",
+            "question": "What is XML?",
+            "answer": "XML stands for Extensible Markup language which means you can extend XML based upon your needs.You can define custom tags in XML easily as opposed to other mark-up language like HTML where you need to work with predefined tags. The structure of XML can be standardizes by making use of DTD and XML Schema.XML is mostly used to transfer data from one system to another."
+        },
+        {
+            "category": "XML",
+            "topic_id": "27",
+            "question": "Difference between DTD and XML Schema?",
+            "answer": "DTD is not written using XML while XML schema are xml documents in itself, which means existing XML tools like XML parsers can be used to work with XML schema."
+        },
+        {
+            "category": "XML",
+            "topic_id": "27",
+            "question": "What is XPath ?",
+            "answer": "XPath is an XML technology which is used to retrieve element from XML documents. Since XML documents are structured, XPath expression can be used to locate and retrieve elements, attributes or value from XML files. XPath is similar to SQL in terms of retrieving data from XML but it has it's own syntax and rules."
+        },
+        {
+            "category": "XML",
+            "topic_id": "27",
+            "question": "What is XSLT?",
+            "answer": "XSLT is another popular XML technology to transform one XML file to other XML, HTML or any other format. XSLT is like a language which specifies its own syntax, functions and operator to transform XML documents."
+        },
+        {
+            "category": "XML",
+            "topic_id": "27",
+            "question": "What is meaning of well formed XML ?",
+            "answer": "A well formed XML means an XML document which is syntactically correct e.g. it has a root element, all open tags are closed properly, attributes are in quotes etc. If an XML is not well formed, it may not be processed and parsed correctly by various XML parsers."
+        },
+        {
+            "category": "XML",
+            "topic_id": "27",
+            "question": "What is XML namespace? Why is it important?",
+            "answer": "XML namespace is similar to package in Java and used to provide a way to avoid conflict between two xml tags of same name but different sources. XML namespace is defined using xmlns attribute at top of the XML document and has following syntax xmlns:prefix='URI'. later that prefix is used along with actual tag in XML documents."
+        },
+        {
+            "category": "XML",
+            "topic_id": "27",
+            "question": "What is the difference between DOM and SAX parser ?",
+            "answer": "DOM creates an in memory tree representation of XML documents during parsing while SAX is a event driven parser. 2) DOM parser is faster than SAX because it accesses the whole XML document in memory.3) SAX parser in Java is better suitable for large XML file than DOM Parser because it doesn't require much memory."
+        },
+        {
+            "category": "XML",
+            "topic_id": "27",
+            "question": "What is a CDATA section in XML?",
+            "answer": "CDATA stands for character data.Any text within CDATA section is not parsed by XML parser and is interpreted as character data not markup. Unlike a comment, CDATA is part of the document. CDATA section starts with '<![CDATA[' and finishes with ']]>'"
+        },
+        {
+            "category": "XML",
+            "topic_id": "27",
+            "question": "What is XML data Binding in Java?",
+            "answer": "XML binding in Java refers to creating Java classes and object from XML documents.The advantage of XML binding in Java is to leverage Java programming capability to create and modify XML documents. JAXB and XmlBeans are some APIs for XML binding in Java"
+        },
+        {
+            "category": "XML",
+            "topic_id": "27",
+            "question": "What is JAXB?",
+            "answer": "Java Architecture for XML Binding (JAXB) allows Java developers to map Java classes to XML representations. JAXB provides two main features: the ability to marshal Java objects into XML and the inverse, i.e. to unmarshal XML back into Java objects"
+        },
+        {
+            "category": "XML",
+            "topic_id": "27",
+            "question": "What are some JAXB annotations?",
+            "answer": "@XmlRootElement:Defines the root element for the XML to be produced. The name of the root XML element is derived from the class name. @XmlElement: Annotates the fields that need to be included in XML/JSON. @XmlType: Specifies the order in which XML elements or JSON output will be produced. @XmlTransient: Annotates fields that we do not want to be included in XML or JSON output."
+        },
+        {
+            "category": "XML",
+            "topic_id": "27",
+            "question": "How is validation done in JAXB?",
+            "answer": "1) Unmarshal-Time Validation: This form of validation enables a client application to receive information about validation errors and warnings detected while unmarshalling XML data into a Java content tree and is completely orthogonal to the other types of validation. To enable or disable it use method Unmarhaller.setValidating(). All JAXB Providers are REQUIRED to support this operation. 2) On-Demand Validation: This form of validation enables a client application to receive information about validation errors and warnings detected in the Java content tree. At any point, client applications can call the Validator.validate() method on the Java content tree (or any sub-tree of it). 3) Fail-Fast Validation: This form of validation enables a client application to receive immediate feedback about modifications to the Java content tree that violate type constraints on Java Properties as defined in the specification. JAXB Providers are NOT REQUIRED support this type of validation."
+        },
+        {
+            "category": "XML",
+            "topic_id": "27",
+            "question": "What is JAXP?",
+            "answer": "Java API for XML Processing (JAXP) is an API for processing XML documents. JAXP leverages the parser standards SAX and DOM so that you can choose to parse your data as a stream of events or to build a tree-structured representation of it. JAXP supports the XSLT standard, giving you control over the presentation of the data and enabling you to convert the data to other XML documents or to other formats, such as HTML."
+        },
+        {
+            "category": "XML",
+            "topic_id": "27",
+            "question": "What is XPath?",
+            "answer": "XPath is a language for addressing an XML document's elements and attributes.It is based on a tree representation of XML document. It provides the ability to navigate around the tree and to select the nodes by a variety of criteria.The simplest XPath is /A/B/C where C is the child of B, B child of A"
+        },
+        {
+            "category": "XML",
+            "topic_id": "27",
+            "question": "What are Atomic values in XPath?",
+            "answer": "Nodes that have no parent or child node/s are Atomic."
+        },
+        {
+            "category": "XML",
+            "topic_id": "27",
+            "question": "How are nodes defined in XPath?",
+            "answer": "XPath has seven kinds of nodes. 1)element 2)text 3)processing-instruction 4)comment 5)namespace 6)attribute 7)document node(root node)"
+        },
+        {
+            "category": "XML",
+            "topic_id": "27",
+            "question": "What is XQuery?",
+            "answer": "Xquery is a query language that is used to retrieve data from XML documents. It is built on XPath expressions and is supported by quite a few database engines."
+        }
+    ]
+}

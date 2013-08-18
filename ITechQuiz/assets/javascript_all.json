@@ -1,0 +1,268 @@
+{
+    "QandAList": [
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "What is the difference between window.onload and onDocumentReady?",
+            "answer": "The onload event does not fire until every last piece of the page is loaded, this includes css and images, which means there's a huge delay before any code is executed. That isn't what we want. We just want to wait until the DOM is loaded and is able to be manipulated. onDocumentReady allows the programmer to do that"
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "What is the difference between == and === ?",
+            "answer": "The == checks for value equality, but === checks for both type and value."
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "What does '1'+2+4 evaluate to? What about 5 + 4 + '3'?",
+            "answer": "Since 1 is a string, everything is a string, so the result is 124. In the second case, its 93."
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "What is the difference between undefined value and null value?",
+            "answer": "undefined means a variable has been declared but has not yet been assigned a value. On the other hand, null is an assignment value. It can be assigned to a variable as a representation of no value.Also, undefined and null are two distinct types: undefined is a type itself (undefined) while null is an object.Unassigned variables are initialized by JavaScript with a default value of undefined. JavaScript never sets a value to null. That must be done programmatically."
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "How do you change the style/class on any element?",
+            "answer": "document.getElementById('myText').style.fontSize = '20'; or document.getElementById('myText').className = 'anyclass';"
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "What are Javascript closures?When would you use them?",
+            "answer": "a closure is the local variables for a function kept alive after the function has returned, or a closure is a stack-frame which is not deallocated when the function returns. A closure takes place when a function creates an environment that binds local variables to it in such a way that they are kept alive after the function has returned. A closure is a special kind of object that combines two things: a function, and any local variables that were in-scope at the time that the closure was created."
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "What is unobtrusive javascript? How to add behavior to an element using javascript?",
+            "answer": "Unobtrusive Javascript refers to the argument that the purpose of markup is to describe a document's structure, not its programmatic behavior and that combining the two negatively impacts a site's maintainability. Inline event handlers are harder to use and maintain, when one needs to set several events on a single element or when one is using event delegation."
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "What is Javascript namespacing? How and where is it used?",
+            "answer": "Using global variables in Javascript is evil and a bad practice. That being said, namespacing is used to bundle up all your functionality using a unique name. In JavaScript, a namespace is really just an object that you've attached all further methods, properties and objects. It promotes modularity and code reuse in the application."
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "What datatypes are supported in Javascript?",
+            "answer": "Number, String, Undefined, null, Boolean"
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "What is the difference between innerHTML and append() in JavaScript?",
+            "answer": "InnerHTML is not standard, and its a String. The DOM is not, and although innerHTML is faster and less verbose, its better to use the DOM methods like appendChild(), firstChild.nodeValue, etc to alter innerHTML content."
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "What boolean operators does JavaScript support?",
+            "answer": "&&, || and !"
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "What is the use of isNaN function?",
+            "answer": "isNaN function will check an argument and return TRUE (1) if the argument does not seem to be a number."
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "What is the difference between 'var a=2' and 'a =2'",
+            "answer": "The major difference between the two is that one variable is local and the other is global. 'var' basically defines the scope of the variable. When we add var to a variable value assignment, javascript ensures that the variable is confined to whichever function it is assigned to and does not collide with the same name variable within another function. When we don't use var, then it is declared as a global function and chances of collision can happen. So it's always advisable to use 'var',i before variable value assignment. If needed use an anonymous function for closure."
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "How do you create a new object in JavaScript?",
+            "answer": "var obj = new Object(); or var obj = {};"
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "How is jQuery different from Javascript?",
+            "answer": "jQuery is a quick as well as concise JavaScript Library that simplifies HTML document traversing, animating, event handling, & Ajax interactions for the purpose of quick web development needs. So although they are not entirely different, both are not the same either!"
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "How do you detect the operating system on the client machine?",
+            "answer": "navigator.appVersion"
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "When can/should AJAX be used?",
+            "answer": "AJAX is best suited for small (hopefully unobtrusive) updates to the current web page, based on information that is not available until it has been provided"
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "Describe the formats and protocols used/specified by AJAX?",
+            "answer": "The client web page is responsible for creating the XmlHttpRequest, and therefore the connection from the web page to some application on the server. Part of this connection identifies how the response can/should be provided to the client code via the use of a 'callback' routine. The callback routine is invoked multiple times with a status code, indicating the reason for the invocation. If the request can be successfully completed by the server application, a responce should also be provided."
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "What values exists for the XmlHttpRequest.readyState field, and what do they mean?",
+            "answer": "readyState values: 0 = uninitialized 1 = loading 2 = loaded 3 = interactive 4 = complete"
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "How do you know that an AJAX request has completed?",
+            "answer": "The XHR.readyState is 4 and the XHR.status is 200 (or zero if the request is to a local file). The callback function is called four times first with status=1, then 2,3, and finally 4."
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "How is encoding handled in AJAX?",
+            "answer": "1)encodeActionURL() method is used for full page refresh 2)encodeResourceURL() method is used for partial page refresh."
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "What are the limitations of Ajax?",
+            "answer": "1)Back functionality cannot work because the dynamic pages don't register themselves to the browsers history engine. Hence the need of Iframe becomes essential.2) The page cannot be bookmarked if implemented using Ajax.3)If java script is disabled , Ajax will not work "
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "What are the security issues with AJAX?",
+            "answer": "1) AJAX function calls are sent in plain text to server. These calls may easily reveal database details, variable names etc 2) User's browsing session can be monitored my maliciously inserting scripts 3)Ajax may encourage developers to use multiple server side pages thereby introducing multiple entry points for attackers"
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "What is jQuery?",
+            "answer": "jQuery is fast, lightweight and feature-rich client side JavaScript Library/Framework which helps in to traverse HTML DOM, make animations, add Ajax interaction, manipulate the page content, change the style and provide cool UI effect. It is one of the most popular client side library and as per a survey it runs on every second website."
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "Which is the starting point of code execution in jQuery?",
+            "answer": "The starting point of jQuery code execution is $(document).ready() function which is executed when DOM is loaded."
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "What does dollar sign ($) means in jQuery?",
+            "answer": "Dollar Sign is nothing but an alias for JQuery."
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "Can we have multiple document.ready() function on the same page?",
+            "answer": "Yes. We can have any number of document.ready() function on the same page."
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "Can we use our own specific character in the place of $ sign in jQuery?",
+            "answer": "By using jQuery.noConflict()."
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "What is the difference between .js and .min.js?",
+            "answer": "jQuery library comes in 2 different versions Production and Deployment. The deployment version is also known as minified version. So .min.js is basically the minified version of jQuery library file. Both the files are same as far as functionality is concerned. but .min.js is quite small in size so it loads quickly and saves bandwidth."
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "What are the slow selectors in jQuery?",
+            "answer": "Class selectors are slow compared to ID and element."
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "How are jQuery selectors executed?",
+            "answer": "The last selector is always executed first.For example, in below jQuery code, jQuery will first find all the elements with class '.myCssClass' and after that it will reject all the other elements which are not in 'p#elmID'. $('p#elmID .myCssClass');"
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "Is there any difference between body onload() and document.ready() function?",
+            "answer": "1) We can have more than one document.ready() function in a page where we can have only one body onload function. 2) document.ready() function is called as soon as DOM is loaded where body.onload() function is called when everything gets loaded on the page that includes DOM, images and all associated resources of the page."
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "What is the difference between parent() and parents() methods in jQuery?",
+            "answer": "The basic difference is the parent() function travels only one level in the DOM tree, where parents() function search through the whole DOM tree."
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "What is the difference between jquery.size() and jquery.length?",
+            "answer": "jQuery .size() method returns number of element in the object. But it is not preferred to use the size() method as jQuery provides .length property and which does the same thing. The .length property is preferred because it does not have the overhead of a function call."
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "What is the use of jquery .each() function?",
+            "answer": "The $.each() function is used to iterate over a jQuery object. The $.each() function can be used to iterate over any collection, whether it is an object or an array."
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "Which are the popular jQuery CDN? and what is the advantage of using CDN?",
+            "answer": "There are 3 popular jQuery CDNs. 1) Google. 2) Microsoft 3) jQuery. Advantage of using CDN: It reduces the load from your server. It saves bandwidth. jQuery framework will load faster from these CDN.The most important benefit is it will be cached, if the user has visited any site which is using jQuery framework from any of these CDN"
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "How to load jQuery locally when CDN fails?",
+            "answer": "Check to see if jQuery is loaded from public CDN or not, if not then reference the jQuery.js file from your folder.<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script> <script type='text/javascript'> \n if (typeof jQuery == 'undefined')\n {\n  document.write(unescape('%3Cscript src='Scripts/jquery.1.9.1.min.js' type='text/javascript'%3E%3C/script%3E')); \n }\n </script>"
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "How do you select element by ID in jQuery?",
+            "answer": "To select element use ID selector. We need to prefix the id with '#' (hash symbol). $('#txtName')"
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "What does $('div.parent') will select?",
+            "answer": "All the div elements with 'parent' class."
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "What are the fastest selectors in jQuery?",
+            "answer": "ID and element selectors are the fastest selectors in jQuery."
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "Difference between $(this) and 'this' in jQuery?",
+            "answer": "this and $(this) refers to the same element. The only difference is the way they are used. 'this' is used in traditional sense, when 'this' is wrapped in $() then it becomes a jQuery object and you are able to use the power of jQuery."
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "What is the difference between $('div') and $('<div/>') in jQuery?",
+            "answer": "$('<div/>') : This creates a new div element. However this is not added to DOM tree unless you don't append it to any DOM element. $('div') : This selects all the div element present on the page."
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "Is there any advantage of using $.ajax() for ajax call against $.get() or $.post()? ",
+            "answer": "By using jQuery post()/ jQuery get(), you always trust the response from the server and you believe it is going to be successful all the time. Well, it is certainly not a good idea to trust the response. As there can be n number of reason which may lead to failure of response. Where jQuery.ajax() is jQuery's low-level AJAX implementation. $.get and $.post are higher-level abstractions that are often easier to understand and use, but don't offer as much functionality (such as error callbacks)."
+        },
+        {
+            "category": "JavaScript",
+            "topic_id": "28",
+            "question": "What are various methods to make ajax request in jQuery?",
+            "answer": "1) load() : Load a piece of html into a container DOM 2)$.getJSON(): Load JSON with GET method. 3)$.getScript(): Load a JavaScript file. 4) $.get(): Use to make a GET call and play extensively with the response. 5)$.post(): Use to make a POST call and don't want to load the response to some container DOM. 6)$.ajax(): Use this to do something on XHR failures, or to specify ajax options (e.g. cache: true) on the fly."
+        }
+    ]
+}
