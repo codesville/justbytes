@@ -10,5 +10,8 @@ public enum Category {
 	Unix,
 	Sql,
 	Hibernate,
-	Spring
+	Spring,
+	SOA,
+	XML,
+	JavaScript
 }

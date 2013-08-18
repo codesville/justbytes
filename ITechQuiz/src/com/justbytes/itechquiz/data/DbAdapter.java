@@ -27,7 +27,7 @@ public class DbAdapter extends SQLiteOpenHelper {
 	public static String DB_PATH = "/data/data/com.justbytes.itechquiz/databases/";
 	public static final String DB_NAME = "itechquiz.db";
 	// Upgrade this version for every change in schema
-	public static final int DB_VER = 2;
+	public static final int DB_VER = 3;
 	public static final String Q_A_TABLE_NAME = "q_and_a";
 	public static final String TOPICS_TABLE_NAME = "topics";
 
@@ -76,7 +76,7 @@ public class DbAdapter extends SQLiteOpenHelper {
 
 	public void createDatabase() throws IOException {
 		if (isDbExists()) {
-			
+
 			db = openDatabase();
 			Log.i(TAG, "Existing DB version(" + db.getVersion()
 					+ ").New version(" + DB_VER + ")");
@@ -89,7 +89,7 @@ public class DbAdapter extends SQLiteOpenHelper {
 						Log.i(TAG, "Old db file deleted:" + deleteFlag);
 					}
 
-					Log.d(TAG, "Copying prebaked database from assets");
+					Log.i(TAG, "Copying prebaked database from assets");
 					db = this.getReadableDatabase();
 					copyDatabase();
 
@@ -99,13 +99,13 @@ public class DbAdapter extends SQLiteOpenHelper {
 			}
 
 		} else {
-			Log.d(TAG, "Copying prebaked database from assets");
+			Log.i(TAG, "Copying prebaked database from assets");
 			db = this.getReadableDatabase();
 			try {
 				copyDatabase();
 				// !!!!!!!!! WARNING: hack to load json files.Comment it out
 				// before pushing to market
-				// loadDataFromJsonFiles(ctx);
+				//loadDataFromJsonFiles(ctx);
 			} catch (IOException e) {
 				throw new Error("Error copying database");
 			}
@@ -244,7 +244,8 @@ public class DbAdapter extends SQLiteOpenHelper {
 				"java_gc.json", "java_io_networking.json",
 				"java_persistance.json", "java_servlets.json",
 				"java_threads.json", "java_struts.json", "hibernate_all.json",
-				"spring_all.json", "sql_all.json", "unix_all.json", } };
+				"spring_all.json", "sql_all.json", "unix_all.json",
+				"soa_all.json", "xml_all.json", "javascript_all.json", } };
 
 		for (int catId = 0; catId < fileNames.length; catId++) {
 			for (int topicId = 0; topicId < fileNames[catId].length; topicId++) {

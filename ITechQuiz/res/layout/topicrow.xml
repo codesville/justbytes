@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/topicrowLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:orientation="horizontal" >
 
     <TextView
@@ -14,15 +14,16 @@
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
         android:textColor="@android:color/black"
-        android:textSize="14sp"
+        android:textSize="15sp"
         android:textStyle="normal"
         android:typeface="normal" />
 
     <ImageView
         android:id="@+id/nextImage"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_centerInParent="true"
         android:layout_alignParentRight="true"
-        android:src="@android:drawable/ic_media_play" />
+        android:src="@drawable/arrow_expand" />
 
 </RelativeLayout>

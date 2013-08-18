@@ -15,7 +15,6 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
 
-import com.justbytes.itechquiz.R.color;
 import com.justbytes.itechquiz.data.DbAdapter;
 
 public class TopicsActivity extends BaseActivity {
@@ -64,7 +63,7 @@ public class TopicsActivity extends BaseActivity {
 				startActivity(qandaIntent);
 			}
 		});
-		
+
 		postQandAButton = (ImageButton) findViewById(R.id.topicsPostQandAButton);
 		postQandAButton.setOnClickListener(new OnClickListener() {
 
@@ -96,7 +95,7 @@ public class TopicsActivity extends BaseActivity {
 					R.layout.topicrow, cursor, FROM, TO);
 			cursorAdapter.setViewBinder(VIEW_BINDER);
 			topicsList.setAdapter(cursorAdapter);
-		} catch (Exception ex) {
+		} catch (Throwable ex) {
 			Log.e(TAG, "Error populating topic list ", ex);
 		} finally {
 			// closing the cursor causes problems with ListView displaying
@@ -113,11 +112,7 @@ public class TopicsActivity extends BaseActivity {
 
 		@Override
 		public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-//			ROW_COUNT++;
-//			if (ROW_COUNT % 2 == 0)
-//				view.setBackgroundColor(color.bgColorGrey);
-//			if (ROW_COUNT >= cursor.getCount())
-//				ROW_COUNT = 0;
+
 			return false;
 		}
 	};

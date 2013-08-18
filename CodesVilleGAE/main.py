@@ -6,15 +6,16 @@ $Id$
 '''
 from framework import bottle
 from framework.bottle import route, template, request, error, debug
+from google.appengine.api import mail
 from google.appengine.api.datastore import Query
 from google.appengine.ext import db
-from google.appengine.api import mail
-# from google.appengine.ext.webapp.util import run_wsgi_app
 from yaml import load
 import c2dm
 import datetime
 import json
 import logging
+from c2dm import UserInfo
+# from google.appengine.ext.webapp.util import run_wsgi_app
 
  
 @route('/')
@@ -38,7 +39,7 @@ def GetLatestQandA():
         for i in range(userVer + 1, latestVer + 1):
             fh = None
             try:
-                logging.info('Loading file:' + 'upload/updates_' + str(i) + '.json ')
+                #logging.info('Loading file:' + 'upload/updates_' + str(i) + '.json ')
                 fh = open('upload/updates_' + str(i) + '.json', 'r')
                 if fh:
                     # load json file
@@ -47,7 +48,8 @@ def GetLatestQandA():
                     outputDict['QandAList'].extend(jsonFile['QandAList']) 
                 
             except Exception, e:
-                logging.error('Exception reading file:%s' % str(e))
+                pass
+                #logging.error('Exception reading file:%s' % str(e))
             finally:
                 if fh:
                     fh.close()
@@ -74,11 +76,13 @@ def PostQandA():
         qanda = QandA(username=userName, topic_id=topicId, question=question, answer=answer, posted_time=postedTime, version=newVer, approval_status='U')
         # save it in datastore
         key = db.put(qanda)
-        approvalUrl = 'http://codesville.appspot.com/ITechQuiz/broadcastQandA?key=%s' % key
+        baseUrl = 'http://codesville.appspot.com/ITechQuiz/broadcastQandA?key=%s' % key
+        manualApprovalUrl = baseUrl + '&autoApprove=N'
+        autoApprovalUrl = baseUrl + '&autoApprove=Y'
         logging.info('Saved QandA posted by %s in Unapproved state' % userName)
-        logging.info(approvalUrl)
+        logging.info(manualApprovalUrl)
         mail.send_mail(sender='codesville@gmail.com', to='codesville@gmail.com', subject='New question has been posted',
-                       body='UserName: %s\n TopicId: %s\n Question: %s\n Answer: %s \n PostedTime: %s\n Approval Url(FLIP FLAG TO A): %s' % (userName, topicId, question, answer, postedTime, approvalUrl))
+                       body=' UserName: %s\n\n TopicId: %s\n\n Question: %s\n\n Answer: %s \n\n PostedTime: %s\n\n Approval Url(MANUAL UPDATION): %s\n\n Approval Url(AUTO UPDATION): %s' % (userName, topicId, question, answer, postedTime, manualApprovalUrl, autoApprovalUrl))
         logging.info('Sending email to admin notifying new QandA')
         
     except Exception, e:
@@ -90,38 +94,44 @@ def PostQandA():
 @route('/ITechQuiz/broadcastQandA', method='GET')          
 def broadcastQandA():
     key = request.GET.get('key', '').strip()
-    
+    autoApprove = request.GET.get('autoApprove', 'N').strip()
     try:
         postedQandA = db.get(key)
-        if postedQandA.approval_status != 'A':
+        
+        # flip the approval_status flag if autoApprove ie no errors in the user QandA
+        if autoApprove == 'Y':
+            postedQandA.approval_status = 'A'
+            db.put(postedQandA)
+        
+        # if errors in QandA and hasn't been approved    
+        if autoApprove == 'N' and postedQandA.approval_status != 'A':
             logging.info('Question %s is in unapproved state.Cannot broadcast' % key)
             mail.send_mail(sender='codesville@gmail.com', to='codesville@gmail.com', subject='Question has not been approved',
                        body='Question %s is in unapproved state.Cannot broadcast' % key)
             return
-        else:
-            topicId = int(postedQandA.topic_id)
-            # notify GCM servers
-            
-            sender = c2dm.C2DM()
-            sender.collapseKey = "msg"
-             
-            query = db.GqlQuery('select * from Topics where topic_id = :1', topicId)
-            row = query.fetch(1)
-            msg = 'New ' + row[0].category
-            if row[0].title != 'All':
-                msg += '(' + row[0].title + ')' 
-            msg += ' question has been posted.' 
-             
-            sender.data = {'message':msg}
-             
-            # send notification to all active users and if GCM
-            for user in sender.getUsers():
-                if user.gcm_c2dm == 'GCM' and user.is_active == 'Y':
-                    sender.registrationIds.append(user.registration_id)
-            
-            response = sender.sendMessage()
-            logging.info('Response from GCM server = %s' % response)
-            logging.info('Finished push notification with msg %s to %d GCM users' % (msg,len(sender.registrationIds)))
+        
+        topicId = int(postedQandA.topic_id)
+        # notify GCM servers
+        sender = c2dm.C2DM()
+        sender.collapseKey = "msg"
+         
+        query = db.GqlQuery('select * from Topics where topic_id = :1', topicId)
+        row = query.fetch(1)
+        msg = 'New ' + row[0].category
+        if row[0].title != 'All':
+            msg += '(' + row[0].title + ')' 
+        msg += ' question has been posted.' 
+         
+        sender.data = {'message':msg}
+         
+        # send notification to all active users and if GCM
+        for user in sender.getUsers():
+            if user.is_active and user.gcm_c2dm == 'GCM':
+                sender.registrationIds.append(user.registration_id)
+        
+        response = sender.sendMessage()
+        #logging.info('Response from GCM server = %s' % response)
+        logging.info('Finished push notification with msg %s to %d GCM users' % (msg, len(sender.registrationIds)))
     except Exception, e:
         logging.error('Failed to save QandA: %s' % str(e))
     finally:
@@ -140,8 +150,8 @@ def BroadcastMsg():
             if user.is_active and user.gcm_c2dm == 'GCM':
                 sender.registrationIds.append(user.registration_id)
         response = sender.sendMessage()
-        logging.info('Response from GCM server = %s' % response)
-        logging.info('Finished push notification with msg %s to %d GCM users' % (msg,len(sender.registrationIds)))
+        #logging.info('Response from GCM server = %s' % response)
+        logging.info('Finished push notification with msg %s to %d GCM users' % (msg, len(sender.registrationIds)))
 
     except Exception, e:
         logging.error('Failed to broadcast msg: %s' % str(e))
@@ -155,10 +165,12 @@ def Register():
     try:
         deviceId = request.POST.get('deviceId', '').strip()
         emailId = request.POST.get('emailId', '').strip()
+        emailId = 'NA'
         registrationId = request.POST.get('regId', '').strip()
         logging.info('Received request to register device owner %s' % registrationId)
         
-        userInfo = c2dm.UserInfo(device_id=deviceId, email_id=emailId, registration_id=registrationId, gcm_c2dm = 'GCM', is_active= True)
+        userInfo = c2dm.UserInfo(device_id=deviceId, email_id=emailId, registration_id=registrationId, gcm_c2dm='GCM', is_active=True)
+        userInfo.update_time = datetime.datetime.now()  # Needs fixing to EST
         query = db.GqlQuery('select * from UserInfo where device_id= :1', deviceId)
         row = query.fetch(1)
         if row:
@@ -271,9 +283,18 @@ def loadTopics():
     topArray.append(Topics(topic_id=23, version=1, title='Servlets', category='Java'))
     topArray.append(Topics(topic_id=24, version=1, title='Struts', category='Java'))
     topArray.append(Topics(topic_id=25, version=1, title='JMS', category='Java'))
+    #
+    topArray.append(Topics(topic_id=26, version=1, title='All', category='SOA'))
+    topArray.append(Topics(topic_id=27, version=1, title='All', category='XML'))
+    topArray.append(Topics(topic_id=28, version=1, title='All', category='JavaScript'))
     
     for top in topArray:
         db.put(top)
+        
+# @route('/ITechQuiz/deleteUserinfo', method='GET')    
+# def deleteUserinfo():
+#     logging.info("deleteUserinfo called...")
+#     db.delete(UserInfo.all())
      
 def main():
     debug(True)

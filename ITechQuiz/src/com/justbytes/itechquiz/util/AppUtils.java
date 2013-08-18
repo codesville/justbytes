@@ -7,34 +7,34 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.StatusLine;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.client.DefaultProxyAuthenticationHandler;
 import org.apache.http.message.BasicNameValuePair;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.util.Log;
 
 import com.google.ads.AdRequest;
+import com.justbytes.itechquiz.ITechQuizActivity;
 
 public class AppUtils {
 
 	public static String[] keywordArr = new String[] { "Java", "C#", "Unix",
 			"J2EE", "Dice", "SQL", "Oracle", "Monster jobs", "Hibernate", "IT",
 			"jobs", "Spring", "Oracle", "Microsoft", "Silverlight", ".NET",
-			"Android", "Google", "Oasis", "Tennis", "Guitar" };
+			"Android", "Google", "Oasis", "Tennis", "Guitar", "Deals",
+			"Groupon", "Careers", "Information Technology", "IT", "Vacation",
+			"women", "money", "trading", "parttime", "jQuery" };
 
-	public static final String AD_ID = "a1519648ebada10";       //mr.
-								     //"a14f4c6b1e03bee";      //codes
+	public static final String AD_ID = "a1519648ebada10"; // mr.
+	// "a14f4c6b1e03bee"; //codes
 	public static final String PLAIN_TEXT = "plain/text";
 
 	public static AdRequest getAdRequest() {
@@ -65,11 +65,12 @@ public class AppUtils {
 		DefaultHttpClient client = new DefaultHttpClient();
 		// TODO: Proxy setting only needed within firewall.Comment out before
 		// pushing out
-//		client.getCredentialsProvider().setCredentials(
-//				new AuthScope("webproxy.bankofamerica.com", 8080),
-//				new UsernamePasswordCredentials("nbkgl14", "happy0be"));
-//		HttpHost proxy = new HttpHost("webproxy.bankofamerica.com", 8080);
-//		client.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
+		// client.getCredentialsProvider().setCredentials(
+		// new AuthScope("webproxy.bankofamerica.com", 8080),
+		// new UsernamePasswordCredentials("nbkgl14", "password"));
+		// HttpHost proxy = new HttpHost("webproxy.bankofamerica.com", 8080);
+		// client.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY,
+		// proxy);
 
 		HttpPost post = new HttpPost(url);
 		List<NameValuePair> paramList = new ArrayList<NameValuePair>();
@@ -81,6 +82,28 @@ public class AppUtils {
 		if (response != null)
 			Log.i("POST", response.getStatusLine().getStatusCode() + "");
 		return response.getStatusLine().getStatusCode();
+	}
+
+	/**
+	 * @return Application's version code from the {@code PackageManager}.
+	 */
+	public static int getAppVersion(Context context) {
+		try {
+			PackageInfo packageInfo = context.getPackageManager()
+					.getPackageInfo(context.getPackageName(), 0);
+			return packageInfo.versionCode;
+		} catch (NameNotFoundException e) {
+			// should never happen
+			throw new RuntimeException("Could not get package name: " + e);
+		}
+	}
+
+	/**
+	 * @return Application's {@code SharedPreferences}.
+	 */
+	public static SharedPreferences getGCMPreferences(Context context) {
+		return context.getSharedPreferences(
+				ITechQuizActivity.class.getSimpleName(), Context.MODE_PRIVATE);
 	}
 
 }

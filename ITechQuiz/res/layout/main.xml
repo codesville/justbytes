@@ -44,7 +44,7 @@
         android:layout_below="@+id/mainTopRowLayout"
         android:clickable="true"
         android:divider="@android:color/background_light"
-        android:dividerHeight="10dp"
+        android:dividerHeight="7dp"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:paddingTop="20dp" />

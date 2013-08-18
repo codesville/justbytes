@@ -55,6 +55,15 @@ public class MainListArrayAdapter extends ArrayAdapter<String> {
 		case Hibernate:
 			imageId = R.drawable.hibernate;
 			break;
+		case SOA:
+			imageId = R.drawable.soalogo;
+			break;
+		case XML:
+			imageId = R.drawable.xmllogo;
+			break;
+		case JavaScript:
+			imageId = R.drawable.jslogo;
+			break;
 
 		}
 		imgVw.setImageResource(imageId);

@@ -5,6 +5,7 @@
 
     <color name="bgColorCyan">#AEC5CF</color>
     <color name="bgColorGrey">#DCDEE0</color>
+    <color name="bgColorLightGrey">#EBEBEB</color>
     <color name="bgColorSkyBlue">#1874CD</color>
 	<color name="bgColorCream">#FFFFFF</color>
     
@@ -13,10 +14,10 @@
     <string name="contactItem">Contact Us</string>
     <string name="shareItem">Share</string>
     <string name="emailTo">codesville@gmail.com</string>
-    <string name="c2dmSenderEmail">esandbee@gmail.com</string>
+    <string name="gcmSenderId">873718768261</string>
     <string name="emailSubject">Feedback/Questions regarding ITechQuiz</string>
     <string name="shareSubject">Check out this cool IT interview app.</string>
-    <string name="shareMsg">Hi there, \n\n Check out this cool free app.\n Its got a ton of tech interview questions ranging from Java/J2EE,Struts,JMS,.NET,C#,SQL,Unix,Hibernate,Spring.\n\n Click on the link below to install the app: \n\n https://play.google.com/store/apps/details?id=com.justbytes.itechquiz \n\n Thanks.</string>
+    <string name="shareMsg">Hi there, \n\nCheck out this cool free app.\nIts got a ton of tech interview questions ranging from Java/J2EE,Struts,JMS,.NET,C#,SQL,Unix,Hibernate,Spring,JavaScript,AJAX,jQuery,XML,SOA.\nYou can also post/fetch new questions.\n\nClick on the link below to install the app: \n https://play.google.com/store/apps/details?id=com.justbytes.itechquiz \n\n Thanks.</string>
 	<string name="fetchURL">http://codesville.appspot.com/ITechQuiz/getLatestQandA?ver=</string>
 	<string name="notfRegisterURL">http://codesville.appspot.com/ITechQuiz/register</string>
 	<string name="postQandAURL">http://codesville.appspot.com/ITechQuiz/postQandA</string>

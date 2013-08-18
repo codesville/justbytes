@@ -8,6 +8,9 @@
         <item>Sql</item>
         <item>Hibernate</item>
         <item>Spring</item>
+        <item>SOA</item>
+        <item>JavaScript</item>
+        <item>XML</item>
     </string-array>
 
 </resources>
