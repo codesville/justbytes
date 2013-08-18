@@ -290,11 +290,27 @@ def loadTopics():
     
     for top in topArray:
         db.put(top)
-        
+
+
+'''
+One time usage during migration..costly I/O operation
+'''        
 # @route('/ITechQuiz/deleteUserinfo', method='GET')    
 # def deleteUserinfo():
 #     logging.info("deleteUserinfo called...")
 #     db.delete(UserInfo.all())
+
+'''
+One time usage during migration
+'''
+# @route('/ITechQuiz/updateExistingQandA', method='GET')    
+# def updateExistingQandA():
+#     logging.info("updateExistingQandA called...")
+#     query = db.GqlQuery('select * from QandA')
+#     rows = query.fetch(100)
+#     for row in rows:
+#         row.approval_status = 'A'
+#         db.put(row)
      
 def main():
     debug(True)
