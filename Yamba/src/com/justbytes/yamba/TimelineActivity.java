@@ -18,10 +18,7 @@ import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
 import android.widget.Toast;
 
-/**
- * @author nbkgl14
- *
- */
+
 public class TimelineActivity extends BaseActivity {
 	
 	private static final String TAG = "TimelineActivity";
