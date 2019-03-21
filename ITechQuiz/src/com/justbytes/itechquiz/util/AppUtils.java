@@ -63,14 +63,7 @@ public class AppUtils {
 	public static int postHttpRequest(String url, Map<String, String> params)
 			throws Exception {
 		DefaultHttpClient client = new DefaultHttpClient();
-		// TODO: Proxy setting only needed within firewall.Comment out before
-		// pushing out
-		// client.getCredentialsProvider().setCredentials(
-		// new AuthScope("webproxy.bankofamerica.com", 8080),
-		// new UsernamePasswordCredentials("nbkgl14", "password"));
-		// HttpHost proxy = new HttpHost("webproxy.bankofamerica.com", 8080);
-		// client.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY,
-		// proxy);
+		
 
 		HttpPost post = new HttpPost(url);
 		List<NameValuePair> paramList = new ArrayList<NameValuePair>();
