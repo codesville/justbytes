@@ -1,7 +1,7 @@
 '''
 Created on Mar 12, 2012
 
-@author: nbkgl14
+@author: basuso
 '''
 import urllib, urllib2
 from yaml import load
