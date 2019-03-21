@@ -19,7 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
- * @author nbkgl14
+ * @author basuso
  *
  */
 public class TimelineActivity extends BaseActivity {
